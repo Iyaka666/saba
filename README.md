@@ -1,0 +1,1 @@
+Este proyecto se hace con el fin de suplir la problematica de el cambio brusco de aulas que pueden darse a veces ademas de ayudar a los estudiantes de la universidad del valle sede Palmira a verificar de forma rapida el horario de las materias en base a las aulas correspondientes además de que ayudará en el hecho de dar soporte a la coordinacion de las reservas de las auditorias.
