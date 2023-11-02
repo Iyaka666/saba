@@ -1,5 +1,5 @@
 import React from 'react'
-import {Text, View, StyleSheet} from 'react-native'
+import {View, StyleSheet} from 'react-native'
 import Constants from 'expo-constants'
 import Login from './containers/Login.jsx'
 import theme from './../theme.js'
