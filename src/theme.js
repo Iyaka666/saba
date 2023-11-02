@@ -12,9 +12,17 @@ const theme = {
         main:'System'
     },
     fontWeight:{
-        thin:'100',
-        normal:'400',
-        bold:'700'
+        thin:   '100',
+        normal: '400',
+        bold:   '700'
+    },
+    margins:{
+        fieldsR:40,
+        fieldsL:40
+    },
+    paddings:{
+        fields:10,
+        fieldsVertical:4
     }
 }
 

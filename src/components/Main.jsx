@@ -1,10 +1,23 @@
 import React from 'react'
-import { Text, View } from 'react-native'
+import {Text, View, StyleSheet} from 'react-native'
+import Constants from 'expo-constants'
+import Login from './containers/Login.jsx'
+import theme from './../theme.js'
 
 const Main = () => {
     return(
-        <View>
-            <Text></Text>
+        <View style={style.view}>
+            <Login></Login>
         </View>
     )
 }
+
+const style = StyleSheet.create({
+    view:{
+        marginTop:Constants.statusBarHeight,
+        marginLeft: 10,
+        backgroundColor: theme.colors.primary
+    }
+})
+
+export default Main
