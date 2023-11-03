@@ -7,10 +7,10 @@ const Passwordfield = (props) => {
     //----------------------------- Hooks -----------------------------
     const [secure, setSecure] = useState(props.initSecure)
     //----------------------------- end Hooks -------------------------
-    let typeEye = 'eye';
-    const hiddenPassword = secure => {
+    let typeEye = "eye";
+    const handlerEye = () => {
         setSecure(!secure)
-        typeEye = !secure ? 'eye-with-line':typeEye
+        typeEye = !secure ? "eye-with-line":typeEye
     }
     
     return (
@@ -21,7 +21,7 @@ const Passwordfield = (props) => {
         style={style.textInput}>
         </TextInput>
         <Pressable        
-        onPress={hiddenPassword}
+        onPress={handlerEye}
         style={style.eye}>
             <Entypo 
             name={typeEye} 
