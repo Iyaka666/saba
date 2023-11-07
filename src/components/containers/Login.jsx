@@ -7,6 +7,7 @@ import Header from './generals/Header.jsx'
 import Footer from './generals/Footer.jsx'
 import Textfield from './generals/Textfield.jsx'
 import theme from './../../theme.js'
+import { isNumberAndOthers, isPasswordValid } from '../../regex.js'
 
 const {height, width} = Dimensions.get('window')
 
@@ -17,10 +18,10 @@ const Login = () => {
     const [inputUser, setInputUser] = useState('')
 
     const verifyValues = (text) => {
-        const isNumberAndOthers = new RegExp("^[0-9-]*$")
-        const isPasswordValid = new RegExp("^(?=.*[A-Z])(?=.*[0-9])(?=.*\W).{8,}$")
+        setInputUser(text)
         if(!isNumberAndOthers.test(text)) {
             Alert.alert('El usuario solo acepta números y "-"')
+            setInputUser('')
         }
     }
     return (
@@ -34,6 +35,7 @@ const Login = () => {
                 <Textfield 
                 placeholder='Usuario'
                 handlerChangeText={verifyValues}
+                value={inputUser}
                 ></Textfield>
                 <Passwordfield 
                 placeholder='Contrase&ntilde;a' 
