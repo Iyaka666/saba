@@ -1,11 +1,16 @@
 import {View, TextInput, StyleSheet} from 'react-native'
 import theme from '../../../theme.js'
 
-const TextField = (props) => {
-    //----------------------------- Hooks -----------------------------
-    
-    //----------------------------- end Hooks -------------------------
+const props = {
+    placeholder:"",
+    value:"",
+    autoCapitalize:'none',
+    inputMode:'text',
+    keyboardType:'default',
+    handlerChangeText: () => null
+}
 
+const TextField = (props) => {
     return(
     <View>
         <TextInput 
@@ -13,6 +18,11 @@ const TextField = (props) => {
         placeholder={props.placeholder}
         placeholderTextColor='#000000'
         autoCapitalize={props.autoCapitalize}
+        inputMode={props.inputMode}
+        keyboardType={props.keyboardType}
+        value={props.value}
+
+        onChangeText={props.handlerChangeText}
         ></TextInput>
     </View>
     )

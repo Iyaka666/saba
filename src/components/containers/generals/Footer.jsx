@@ -2,22 +2,25 @@ import React from 'react'
 import {View, Text, StyleSheet} from 'react-native'
 import theme from '../../../theme.js'
 
-const Footer = () => {
+const Footer = (props) => {
+    const TEXT_STYLE = style.text
     return (
         <View style={style.container}>
-            <Text>Grupo de trabajo SKYNET</Text>
-            <Text style={style.end}>desarrollo-de-software&commat;saba.co</Text>
-            <Text style={style.init}>2023</Text>
-            <Text>&copy;</Text>
+            <Text style={TEXT_STYLE}>Grupo de trabajo SKYNET</Text>
+            <Text style={[style.end, TEXT_STYLE]}>desarrollo-de-software@saba.co</Text>
+            <Text style={[style.init, TEXT_STYLE]}>2023</Text>
+            <Text style={TEXT_STYLE}>&copy;</Text>
         </View>
     )
 }
 
 const style = StyleSheet.create({
     container:{
-        color:theme.colors.primary,
         backgroundColor:theme.colors.secondary,
-        textAlign:'center'
+    },
+    text:{
+        color:theme.colors.primary,
+        textAlign:'center'        
     },
     end:{
         marginBottom:10
@@ -26,3 +29,5 @@ const style = StyleSheet.create({
         marginTop:10
     }
 })
+
+export default Footer
