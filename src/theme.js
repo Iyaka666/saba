@@ -1,8 +1,9 @@
+const COLOR_SECONDARY = '#e40613'
 const theme = {
     colors:{
         textPrimary:'#000000',
         primary:    '#f9f9f9',
-        secondary:  '#e40613'
+        secondary:  COLOR_SECONDARY
     },
     fontSizes:{
         body:       14,
@@ -23,6 +24,10 @@ const theme = {
     paddings:{
         fields:10,
         fieldsVertical:4
+    },
+    buttons:{
+        radioButton: 10,
+        backgroundColor:COLOR_SECONDARY
     }
 }
 
