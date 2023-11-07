@@ -14,16 +14,33 @@ const {height, width} = Dimensions.get('window')
 const COLOR_SECONDARY = theme.colors.secondary
 
 const Login = () => {
-
+    //----------------------------  Hooks ----------------------------
     const [inputUser, setInputUser] = useState('')
-
-    const verifyValues = (text) => {
+    const [inputPassword, setInputPassword] = useState('')
+    //----------------------------  End hooks ----------------------------
+    //---------------------------  Functions  ----------------------------
+    const verifyInputUser = (text) => {
         setInputUser(text)
         if(!isNumberAndOthers.test(text)) {
-            Alert.alert('El usuario solo acepta números y "-"')
+            Alert.alert(
+                title='Usuario invalido', 
+                message='El usuario solo acepta números y "-" ejemplo: 12345678-9'
+                )
             setInputUser('')
         }
     }
+
+    const verifyInputPassword = (text) => {
+        setInputPassword(text)
+        if(!isPasswordValid.test(text)) {
+            Alert.alert(
+                title='Contraseña Invalida',
+                message='Debe contener mínimo 8 letras, tener un número y tener un caracter especial'
+                )
+            setInputPassword('')
+        }
+    }
+    //---------------------------  End functions  ----------------------------
     return (
         <View style={style.container}>
             <View style={style.header}>
@@ -34,18 +51,22 @@ const Login = () => {
                 <Text style={style.text}>Sistema de asignaci&oacute;n y b&uacute;squeda de{'\n'}aulas</Text>
                 <Textfield 
                 placeholder='Usuario'
-                handlerChangeText={verifyValues}
+                handlerChangeText={verifyInputUser}
                 value={inputUser}
                 ></Textfield>
                 <Passwordfield 
-                placeholder='Contrase&ntilde;a' 
+                placeholder='Contrase&ntilde;a'
+                value={inputPassword}
                 initSecure/>
                 <CheckBox 
                 title="Recordarme" 
                 checkedColor={COLOR_SECONDARY}
                 center 
                 containerStyle={style.checkBox}/>
-                <Pressable style={style.button}>
+                <Pressable 
+                style={style.button}
+                onPress={verifyInputPassword}
+                >
                     <Text 
                     style={[style.textButton, style.textCenter]}
                     >Iniciar sesion</Text>
