@@ -16,7 +16,7 @@ const TextField = (props) => {
         <TextInput 
         style={style.input}
         placeholder={props.placeholder}
-        placeholderTextColor='#000000'
+        placeholderTextColor='#555555'
         autoCapitalize={props.autoCapitalize}
         inputMode={props.inputMode}
         keyboardType={props.keyboardType}
@@ -42,7 +42,7 @@ const style = StyleSheet.create({
         borderColor:theme.colors.secondary,
         borderWidth: 1,
         borderRadius: 8,
-        fontWeight:theme.fontWeight.thin
+        fontWeight:theme.fontWeight.normal
     }
 })
 
