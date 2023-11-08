@@ -35,7 +35,7 @@ const Login = () => {
         if(!isPasswordValid.test(text)) {
             Alert.alert(
                 title='Contraseña Invalida',
-                message='Debe contener mínimo 8 letras, tener un número y tener un caracter especial'
+                message='Debe contener mínimo 8 letras, tener un número y tener un caracter especial ej:( !,",#,$,%,&,/,(,) )'
                 )
             setInputPassword('')
         }
