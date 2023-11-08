@@ -3,6 +3,11 @@ import {View, TextInput, Pressable, StyleSheet} from 'react-native'
 import {Entypo} from '@expo/vector-icons'
 import theme from '../../../theme.js'
 
+const props = {
+    initSecure,
+    placeholder
+}
+
 const Passwordfield = (props) => {
     //----------------------------- Hooks -----------------------------
     const [secure, setSecure] = useState(props.initSecure)
