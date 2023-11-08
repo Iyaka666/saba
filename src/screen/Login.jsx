@@ -2,12 +2,12 @@ import React,{useState} from 'react'
 import {View, Text, Pressable, StyleSheet, Dimensions, Alert} from 'react-native'
 import { CheckBox } from '@rneui/themed'
 //import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen'
-import Passwordfield from './generals/Passwordfield.jsx'
-import Header from './generals/Header.jsx'
-import Footer from './generals/Footer.jsx'
-import Textfield from './generals/Textfield.jsx'
-import theme from './../../theme.js'
-import { isNumberAndOthers, isPasswordValid } from '../../regex.js'
+import Passwordfield from '../components/containers/generals/Passwordfield.jsx'
+import Header from '../components/containers/generals/Header.jsx'
+import Footer from '../components/containers/generals/Footer.jsx'
+import Textfield from '../components/containers/generals/Textfield.jsx'
+import theme from '../theme.js'
+import { isNumberAndOthers, isPasswordValid } from '../regex.js'
 
 const {height, width} = Dimensions.get('window')
 

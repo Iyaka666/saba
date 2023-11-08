@@ -1,6 +1,6 @@
 import React from 'react'
 import {View, Text, StyleSheet} from 'react-native'
-import theme from '../../../theme.js'
+import theme from '../../theme.js'
 
 const Footer = (props) => {
     const TEXT_STYLE = style.text

@@ -1,8 +1,8 @@
 import React, {useState} from 'react'
 import {View, Text, Pressable} from 'react-native'
-import TextField from './generals/Textfield.jsx'
-import PasswordField from './generals/Passwordfield.jsx'
-import { isOnlyText, isPasswordValid, isValidCode, isValidEmail } from '../../regex.js'
+import TextField from '../components/containers/generals/Textfield.jsx'
+import PasswordField from '../components/containers/generals/Passwordfield.jsx'
+import { isOnlyText, isPasswordValid, isValidCode, isValidEmail } from '../regex.js'
 
 const Register = () => {
     //----------------------------  Hooks ----------------------------
