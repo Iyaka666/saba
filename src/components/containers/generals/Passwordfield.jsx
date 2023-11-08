@@ -5,7 +5,8 @@ import theme from '../../../theme.js'
 
 const props = {
     initSecure,
-    placeholder
+    placeholder,
+    handlerChangeText: () => null
 }
 
 const Passwordfield = (props) => {
@@ -21,6 +22,7 @@ const Passwordfield = (props) => {
     return (
     <View style={style.container}>
         <TextInput
+        handlerChangeText={props.handlerChangeText}
         secureTextEntry={secure}
         placeholder={props.placeholder}
         style={style.textInput}>
