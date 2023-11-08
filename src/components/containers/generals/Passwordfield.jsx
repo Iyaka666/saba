@@ -59,7 +59,7 @@ const style = StyleSheet.create({
         position:'absolute',
         top:25,
         left:308,
-        zIndex:100
+        zIndex:5
     }
 })
 
