@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import {View, TextInput, Pressable, StyleSheet} from 'react-native'
 import {Entypo} from '@expo/vector-icons'
-import theme from '../../../theme.js'
+import theme from '../theme.js'
 
 const props = {
     initSecure,

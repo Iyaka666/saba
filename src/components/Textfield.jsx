@@ -1,5 +1,5 @@
 import {View, TextInput, StyleSheet} from 'react-native'
-import theme from '../../../theme.js'
+import theme from '../theme.js'
 
 const props = {
     placeholder:"",
