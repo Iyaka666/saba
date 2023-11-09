@@ -58,6 +58,7 @@ const Register = () => {
         if(!isPasswordValid.test(inputPassword)){
             Alert.alert(title='Contraseña invalida',
             message='La contraseña debe tener ')
+            setInputConfirPassword('')
             setInputPassword('')
         }
     } 
@@ -131,4 +132,3 @@ const Register = () => {
 }
 
 export default Register
-
