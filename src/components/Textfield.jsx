@@ -42,7 +42,7 @@ const style = StyleSheet.create({
         borderColor:theme.colors.secondary,
         borderWidth: 1,
         borderRadius: 8,
-        fontWeight:theme.fontWeight.normal
+        fontWeight:theme.fontWeight.thin
     }
 })
 
