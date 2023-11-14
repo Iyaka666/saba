@@ -3,12 +3,6 @@ import {View, TextInput, Pressable, StyleSheet} from 'react-native'
 import {Entypo} from '@expo/vector-icons'
 import theme from '../theme.js'
 
-const props = {
-    initSecure,
-    placeholder,
-    handlerChangeText: () => null
-}
-
 const Passwordfield = (props) => {
     //----------------------------- Hooks -----------------------------
     const [secure, setSecure] = useState(props.initSecure)
@@ -25,6 +19,7 @@ const Passwordfield = (props) => {
         handlerChangeText={props.handlerChangeText}
         secureTextEntry={secure}
         placeholder={props.placeholder}
+        placeholderTextColor="#555555"
         style={style.textInput}>
         </TextInput>
         <Pressable        
