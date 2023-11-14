@@ -1,5 +1,5 @@
 export const isNumberAndOthers = new RegExp("^[0-9-]+$")
 export const isPasswordValid = new RegExp("^(?=.*[A-Z])(?=.*[0-9])(?=.*\W).{8,}$")
 export const isOnlyText = new RegExp("^[a-zA-ZÁ-Úá-úüÜñÑ\s]+$")
-export const isValidEmail = new RegExp("^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$")
+export const isValidEmail = new RegExp("^(\w-\.)+@(\w-)+(\.\w){1,2}$")
 export const isValidCode = new RegExp("^(?:\d{7}-\d{4}|\d{7,10}[SCOP])$")
