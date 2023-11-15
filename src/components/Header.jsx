@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text, StyleSheet} from 'react-native'
-import Logo from './../../../assets/svgLogo.svg'
+import Logo from './../../assets/svgLogo.svg'
 import theme from '../theme.js'
 
 const Header = () => {
