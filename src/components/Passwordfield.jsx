@@ -4,10 +4,10 @@ import {Entypo} from '@expo/vector-icons'
 import theme from '../theme.js'
 
 const Passwordfield = (props) => {
+    let typeEye = "eye";
     //----------------------------- Hooks -----------------------------
     const [secure, setSecure] = useState(props.initSecure)
     //----------------------------- end Hooks -------------------------
-    let typeEye = "eye";
     const handlerEye = () => {
         setSecure(!secure)
         typeEye = !secure ? "eye-with-line":typeEye
