@@ -17,14 +17,16 @@ const Login = () => {
     //----------------------------  Hooks ----------------------------
     const [inputUser, setInputUser] = useState('')
     const [inputPassword, setInputPassword] = useState('')
-    const [tapCheck, setTapCheck] = useState(false)
+    const [rememberMe, setRememberMe] = useState(false)
     //----------------------------  End hooks ----------------------------
     //---------------------------- Handlers ------------------------------
     const handlerRememberMe = () => {
-        setTapCheck(!tapCheck)
+        setRememberMe(!rememberMe)
+        if(rememberMe){
+            
+        }
     }
     //---------------------------- End handlers ------------------------------
-
     //---------------------------  Verification of valid values  ----------------------------
     const verifyInputUser = (text) => {
         setInputUser(text)
@@ -51,7 +53,7 @@ const Login = () => {
     return (
         <View style={style.container}>
             <View style={style.header}>
-                <Header></Header>
+                <Header/>
             </View>
 
             <View style={style.content}>
@@ -71,7 +73,7 @@ const Login = () => {
                 
                 <CheckBox 
                 title="Recordarme" 
-                checked={tapCheck}
+                checked={rememberMe}
                 checkedColor={COLOR_SECONDARY}
                 center 
                 containerStyle={style.checkBox}
@@ -95,7 +97,8 @@ const Login = () => {
             </View>
             
             <View style={style.footer}>
-                <Footer></Footer>
+                <Footer 
+                noPqrs/>
             </View>
         </View>
     )
@@ -135,7 +138,9 @@ const style = StyleSheet.create({
     },
     checkBox:{
         backgroundColor:theme.colors.primary,
-        color: theme.colors.secondary
+        color: theme.colors.secondary,
+        marginLeft:'auto',
+        marginRight:'auto'
     },
     button:{
         borderRadius:20,
@@ -145,8 +150,8 @@ const style = StyleSheet.create({
         paddingLeft: 8,
         paddingRight: 8,
         paddingBottom: 8,
-        marginLeft: 100,
-        marginRight: 100
+        marginLeft: 'auto',
+        marginRight: 'auto'
     },
     textButton:{
         color:theme.colors.primary,
