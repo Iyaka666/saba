@@ -4,13 +4,13 @@ import {Entypo} from '@expo/vector-icons'
 import theme from '../theme.js'
 
 const Passwordfield = (props) => {
-    let typeEye = "eye";
     //----------------------------- Hooks -----------------------------
     const [secure, setSecure] = useState(props.initSecure)
+    const [eyeIcon, setEyeIcon] = useState('eye')
     //----------------------------- end Hooks -------------------------
     const handlerEye = () => {
         setSecure(!secure)
-        typeEye = !secure ? "eye-with-line":typeEye
+        setEyeIcon(secure ? 'eye':'eye-with-line')
     }
     
     return (
@@ -26,7 +26,7 @@ const Passwordfield = (props) => {
         onPress={handlerEye}
         style={style.eye}>
             <Entypo 
-            name={typeEye} 
+            name={eyeIcon} 
             size={24} 
             color={theme.colors.secondary}>
             </Entypo>
