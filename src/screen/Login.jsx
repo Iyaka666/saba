@@ -17,8 +17,15 @@ const Login = () => {
     //----------------------------  Hooks ----------------------------
     const [inputUser, setInputUser] = useState('')
     const [inputPassword, setInputPassword] = useState('')
+    const [tapCheck, setTapCheck] = useState(false)
     //----------------------------  End hooks ----------------------------
-    //---------------------------  Functions  ----------------------------
+    //---------------------------- Handlers ------------------------------
+    const handlerRememberMe = () => {
+        setTapCheck(!tapCheck)
+    }
+    //---------------------------- End handlers ------------------------------
+
+    //---------------------------  Verification of valid values  ----------------------------
     const verifyInputUser = (text) => {
         setInputUser(text)
         if(!isNumberAndOthers.test(text)) {
@@ -40,7 +47,7 @@ const Login = () => {
             setInputPassword('')
         }
     }
-    //---------------------------  End functions  ----------------------------
+    //---------------------------  End Verification of valid values  ----------------------------
     return (
         <View style={style.container}>
             <View style={style.header}>
@@ -48,21 +55,28 @@ const Login = () => {
             </View>
 
             <View style={style.content}>
+
                 <Text style={style.text}>Sistema de asignaci&oacute;n y b&uacute;squeda de{'\n'}aulas</Text>
+                
                 <Textfield 
                 placeholder='Usuario'
                 handlerChangeText={verifyInputUser}
                 value={inputUser}
                 ></Textfield>
+                
                 <Passwordfield 
                 placeholder='Contrase&ntilde;a'
                 value={inputPassword}
                 initSecure/>
+                
                 <CheckBox 
                 title="Recordarme" 
+                checked={tapCheck}
                 checkedColor={COLOR_SECONDARY}
                 center 
-                containerStyle={style.checkBox}/>
+                containerStyle={style.checkBox}
+                onPress={handlerRememberMe}/>
+                
                 <Pressable 
                 style={style.button}
                 onPress={verifyInputPassword}
@@ -71,9 +85,11 @@ const Login = () => {
                     style={[style.textButton, style.textCenter]}
                     >Iniciar sesion</Text>
                 </Pressable>
+                
                 <Text style={[style.textCenter, style.freeText]}
                 >¿No tienes una cuenta?  <Text
                 style={[style.textRed, style.freeText]}>registrate</Text> </Text>
+                
                 <Text 
                 style={[style.textRed,style.textCenter]}>¿Olvidaste tu contrase&ntilde;a?</Text>
             </View>
