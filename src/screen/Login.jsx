@@ -1,13 +1,26 @@
-import React,{useState} from 'react'
-import {View, Text, Pressable, StyleSheet, Dimensions, Alert} from 'react-native'
+import React,{useState, useEffect} from 'react'
+import {
+    AsyncStorage,
+    Dimensions, 
+    Pressable, 
+    StyleSheet, 
+    Text, 
+    View 
+} from 'react-native'
+/*
+import {
+    widthPercentageToDP as wp,
+    heightPercentageToDP as hp
+} from 'react-native-responsive-screen' */
 import { CheckBox } from '@rneui/themed'
-//import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen'
 import Passwordfield from './../components/Passwordfield.jsx'
 import Header from '../components/Header.jsx'
 import Footer from '../components/Footer.jsx'
 import Textfield from '../components/Textfield.jsx'
 import theme from '../theme.js'
-import { isNumberAndOthers, isPasswordValid } from '../regex.js'
+import {verifyInputUser, verifyInputPassword} from '../validationValidValues.js'
+import * as Keychain from 'react-native-keychain'
+
 
 const {height, width} = Dimensions.get('window')
 
@@ -18,38 +31,43 @@ const Login = () => {
     const [inputUser, setInputUser] = useState('')
     const [inputPassword, setInputPassword] = useState('')
     const [rememberMe, setRememberMe] = useState(false)
+
+    useEffect(() => {
+        handlerLoadCredentialsStoraged();
+    },[])
     //----------------------------  End hooks ----------------------------
     //---------------------------- Handlers ------------------------------
     const handlerRememberMe = () => {
         setRememberMe(!rememberMe)
-        if(rememberMe){
+    }
+    const handlerLoadCredentialsStoraged = async () => {
+        try {
+            const credentials = await AsyncStorage.getItem('credentials')
+            if (credentials){
+                const {userName, password} = JSON.parse(credentials)
+                setInputUser(userName)
+                setInputPassword(password)
+                setRememberMe(true)
+            } 
+        } catch (error) {
+            
+        }
+    }
+
+    const saveCredentials = async () => {
+        try {
+            const credentials = JSON.stringify({userName,password})
+            await AsyncStorage.setItem('credentials', credentials)
+
+            if (rememberMe){
+                await Keychain.setGenericPassword(userName, password)
+            }
+        } catch (error) {
             
         }
     }
     //---------------------------- End handlers ------------------------------
-    //---------------------------  Verification of valid values  ----------------------------
-    const verifyInputUser = (text) => {
-        setInputUser(text)
-        if(!isNumberAndOthers.test(text)) {
-            Alert.alert(
-                title='Usuario invalido', 
-                message='El usuario solo acepta números y "-" ejemplo: 12345678-9'
-                )
-            setInputUser('')
-        }
-    }
 
-    const verifyInputPassword = (text) => {
-        setInputPassword(text)
-        if(!isPasswordValid.test(text)) {
-            Alert.alert(
-                title='Contraseña Invalida',
-                message='Debe contener mínimo 8 letras, tener un número y tener un caracter especial ej:( !,",#,$,%,&,/,(,) )'
-                )
-            setInputPassword('')
-        }
-    }
-    //---------------------------  End Verification of valid values  ----------------------------
     return (
         <View style={style.container}>
             <View style={style.header}>
@@ -62,7 +80,7 @@ const Login = () => {
                 
                 <Textfield 
                 placeholder='Usuario'
-                handlerChangeText={verifyInputUser}
+                handlerChangeText={() => verifyInputUser(inputUser, setInputUser)}
                 value={inputUser}
                 ></Textfield>
                 
@@ -81,7 +99,7 @@ const Login = () => {
                 
                 <Pressable 
                 style={style.button}
-                onPress={verifyInputPassword}
+                onPress={() => verifyInputPassword(inputPassword, setInputPassword)}
                 >
                     <Text 
                     style={[style.textButton, style.textCenter]}
