@@ -1,16 +1,19 @@
-import fs from 'react-native-fs'
+/*
+import {StorageAccessFramework as StorageAccess} from 'expo-file-system'
 
 const getTimeStampedFileName = () => {
     const timeStamp = new Date().toISOString().replace(/[:.]/g,'-')
-    return `${timeStamp}_saba_log.txt`
+    return `${timeStamp}_saba.log`
 }
 
 
-export const logFile = (error) => {
-    const logFilePath = `${fs.DocumentDirectoryPath}/${getTimeStampedFileName()}`
+export const createLogFile = async (error) => {
+    const permission = await StorageAccess.requestDirectoryPermissionsAsync()
+    const logFilePath = fs.
     const bodyFile = `Archivo -> ${error.fileName}\n Linea ${error.lineNumber}:Columna ${error.columnNumber}\nError -> ${error.name}\nDescripción -> ${error.message}` 
+
+    if(permission.granted)
     
-    fs.appendFile(logFilePath, bodyFile, 'utf8')
-        .then(() => console.log('Log guardado en el archivo:', logFilePath))
-        .catch((error) => console.error('Error al guardar el log en el archivo:', error))
+    
 }
+*/
