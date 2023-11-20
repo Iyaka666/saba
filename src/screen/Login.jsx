@@ -19,6 +19,7 @@ import Footer from '../components/Footer.jsx'
 import Textfield from '../components/Textfield.jsx'
 import theme from '../theme.js'
 import {verifyInputUser, verifyInputPassword} from '../validationValidValues.js'
+import { logFile } from './../logs.js'
 import * as Keychain from 'react-native-keychain'
 
 
@@ -50,7 +51,7 @@ const Login = () => {
                 setRememberMe(true)
             } 
         } catch (error) {
-            
+            logFile(error)
         }
     }
 
@@ -63,7 +64,7 @@ const Login = () => {
                 await Keychain.setGenericPassword(userName, password)
             }
         } catch (error) {
-            
+            logFile(error)
         }
     }
     //---------------------------- End handlers ------------------------------
