@@ -1,7 +1,7 @@
 import {isNumberAndOthers, isPasswordValid} from './regex.js'
 import {Alert} from 'react-native'
 
-export const verifyInputUser = (inputUser, setInputUser, ) => {
+export const verifyInputUser = (inputUser, setInputUser ) => {
     setInputUser(inputUser)
     if(!isNumberAndOthers.test(inputUser)) {
         Alert.alert(
