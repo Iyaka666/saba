@@ -19,7 +19,7 @@ import Footer from '../components/Footer.jsx'
 import Textfield from '../components/Textfield.jsx'
 import theme from '../theme.js'
 import {verifyInputUser, verifyInputPassword} from '../validationValidValues.js'
-import { logFile } from './../logs.js'
+//import { logFile } from './../logs.js'
 import * as Keychain from 'react-native-keychain'
 
 
@@ -51,20 +51,21 @@ const Login = () => {
                 setRememberMe(true)
             } 
         } catch (error) {
-            logFile(error)
+            console.error(error)
         }
     }
 
     const saveCredentials = async () => {
-        try {
-            const credentials = JSON.stringify({userName,password})
-            await AsyncStorage.setItem('credentials', credentials)
-
+        try {            
             if (rememberMe){
+                const credentials = JSON.stringify({userName,password})
+                await AsyncStorage.setItem('credentials', credentials)
                 await Keychain.setGenericPassword(userName, password)
+            }else{
+                return
             }
         } catch (error) {
-            logFile(error)
+            console.error(error)
         }
     }
     //---------------------------- End handlers ------------------------------
@@ -100,7 +101,7 @@ const Login = () => {
                 
                 <Pressable 
                 style={style.button}
-                onPress={() => verifyInputPassword(inputPassword, setInputPassword)}
+                onPress={() => [verifyInputPassword(inputPassword, setInputPassword), saveCredentials()]}
                 >
                     <Text 
                     style={[style.textButton, style.textCenter]}
