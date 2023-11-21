@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native'
-import Header from './../components/Header.jsx'
+import Header from './../components/HeaderWithUser.jsx'
 import Footer from './../components/Footer.jsx'
 import Mapa from './../../assets/svgMapa.svg'
 import PortaPapeles from './../../assets/svgPortaPapeles.svg'
@@ -18,25 +18,23 @@ const Home = () => {
             </View>
 
             <View style={style.content}>
-                <Text style={style.text}>Sistema de asignaci&oacute;n y b&uacute;squeda de{'\n'}aulas</Text>
-                <View style={style.imageContainer}>
-                    <View style={style.image}>
-                        <Mapa width={750} height={100} />
-                        <TouchableOpacity style={style.button}>
-                            <Text
-                                style={[style.textButton, style.textCenter]}
-                            >Mapa</Text>
-                        </TouchableOpacity>
-                    </View>
 
-                    <View style={style.image}>
-                        <PortaPapeles width={750} height={100} />
-                        <TouchableOpacity style={style.button}>
-                            <Text
-                                style={[style.textButton, style.textCenter]}
-                            >Asignación</Text>
-                        </TouchableOpacity>
-                    </View>
+                <View style={style.image}>
+                    <PortaPapeles width={750} height={150} />
+                    <TouchableOpacity style={style.button}>
+                        <Text
+                            style={[style.textButton, style.textCenter]}
+                        >Asignación</Text>
+                    </TouchableOpacity>
+                </View>
+
+                <View style={style.image}>
+                    <Mapa width={750} height={150} />
+                    <TouchableOpacity style={style.button}>
+                        <Text
+                            style={[style.textButton, style.textCenter]}
+                        >Mapa</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
 
@@ -60,32 +58,19 @@ const style = StyleSheet.create({
         flex: 1
     },
     content: {
-        flex: 7,
+        position: 'absolute',
 
-    },
-    imageContainer: {
-        flex: 7,
     },
     image: {
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: theme.colors.primary,
-        height: 100,
-        width: width
     },
     footer: {
-        flex: 2,
         position: 'absolute',
         bottom: 0,
         left: -10,
         right: 0
-    },
-    text: {
-        fontSize: 36,
-        textAlign: 'center',
-        marginTop: 20,
-        marginLeft: 30,
-        marginRight: 30
     },
     textRed: {
         color: theme.colors.secondary
@@ -99,8 +84,7 @@ const style = StyleSheet.create({
         paddingLeft: 8,
         paddingRight: 8,
         paddingBottom: 8,
-        marginLeft: 100,
-        marginRight: 100
+        width: 100
     },
     textButton: {
         color: theme.colors.primary,
