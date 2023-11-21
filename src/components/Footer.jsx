@@ -23,8 +23,8 @@ const Footer = (props) => {
             <Text style={[style.end, TEXT_STYLE]}>desarrollo-de-software@saba.co</Text>
             
             <LabelLinking 
-            link={"https://forms.gle/tV5dJmQmqbgwX1M9A"}
-            text={'PQRS'} 
+            link="https://forms.gle/tV5dJmQmqbgwX1M9A"
+            text='PQRS' 
             contentStyle={style.link}/>
             
             <Text style={[style.init, TEXT_STYLE]}>2023</Text>
