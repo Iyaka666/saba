@@ -1,28 +1,27 @@
 import {View, TextInput, StyleSheet} from 'react-native'
 import theme from '../theme.js'
 
-const props = {
-    placeholder:"",
-    value:"",
-    autoCapitalize:'none',
-    inputMode:'text',
-    keyboardType:'default',
-    handlerChangeText: () => null
-}
-
-const TextField = (props) => {
+const TextField = (
+    {
+        placeholder,
+        value,
+        autoCapitalize = 'none',
+        inputMode = 'text',
+        keyboardType = 'default',
+        handlerChangeText
+    }
+) => {
     return(
     <View>
         <TextInput 
         style={style.input}
-        placeholder={props.placeholder}
+        placeholder={placeholder}
         placeholderTextColor='#555555'
-        autoCapitalize={props.autoCapitalize}
-        inputMode={props.inputMode}
-        keyboardType={props.keyboardType}
-        value={props.value}
-
-        onChangeText={props.handlerChangeText}
+        autoCapitalize={autoCapitalize}
+        inputMode={inputMode}
+        keyboardType={keyboardType}
+        value={value}
+        onChangeText={handlerChangeText}
         ></TextInput>
     </View>
     )
