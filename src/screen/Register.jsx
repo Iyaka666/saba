@@ -12,7 +12,6 @@ import {
     validEqualPassword,
     validFieldEmpty
 } from './../validationValidValues.js'
-import {saveUser} from './../service/saveUser.js'
 
 const Register = () => {
     //----------------------------  Hooks ----------------------------
@@ -68,7 +67,6 @@ const Register = () => {
                     inputName,
                     inputPassword,
                     inputlastName) ) {
-                        saveUser()
                         Alert.alert(title='Aviso', message='Ha sido registrado con éxito')
                     }}}
             />
