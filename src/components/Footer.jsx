@@ -1,5 +1,6 @@
 import React from 'react'
-import {View, Text, StyleSheet, Linking} from 'react-native'
+import {View, Text, StyleSheet} from 'react-native'
+import LabelLinking from './LabelLinking.jsx'
 import theme from '../theme.js'
 
 const Footer = (props) => {
@@ -15,18 +16,16 @@ const Footer = (props) => {
             <Text style={TEXT_STYLE}>&copy;</Text>
         </View>
     )
-    }else
-        handlerGoLink = () => Linking.openURL("https://forms.gle/tV5dJmQmqbgwX1M9A")
+    }else        
         return(
             <View style={style.container}>
             <Text style={TEXT_STYLE}>Grupo de trabajo SKYNET</Text>
             <Text style={[style.end, TEXT_STYLE]}>desarrollo-de-software@saba.co</Text>
             
-            <Pressable
-            onPress={handlerGoLink}
-            >
-                <Text style={style.link}>PQRS</Text>
-            </Pressable>
+            <LabelLinking 
+            link={"https://forms.gle/tV5dJmQmqbgwX1M9A"}
+            text={'PQRS'} 
+            contentStyle={style.link}/>
             
             <Text style={[style.init, TEXT_STYLE]}>2023</Text>
             <Text style={TEXT_STYLE}>&copy;</Text>
