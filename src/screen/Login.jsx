@@ -1,8 +1,7 @@
 import React,{useState, useEffect} from 'react'
 import {
     AsyncStorage,
-    Dimensions, 
-    Pressable, 
+    Dimensions,
     StyleSheet, 
     Text, 
     View 
@@ -17,6 +16,7 @@ import Passwordfield from './../components/Passwordfield.jsx'
 import Header from '../components/Header.jsx'
 import Footer from '../components/Footer.jsx'
 import Textfield from '../components/Textfield.jsx'
+import ButtonText from '../components/ButtonText.jsx'
 import theme from '../theme.js'
 import {verifyInputUser, verifyInputPassword} from '../validationValidValues.js'
 //import { logFile } from './../logs.js'
@@ -99,15 +99,13 @@ const Login = () => {
                 containerStyle={style.checkBox}
                 onPress={handlerRememberMe}/>
                 
-                <Pressable 
-                style={style.button}
+                <ButtonText
+                text='Iniciar sesion'
+                containerStyle={style.button}
+                contentStyle={[style.textButton, style.textCenter]}
                 onPress={() => [verifyInputPassword(inputPassword, setInputPassword), saveCredentials()]}
-                >
-                    <Text 
-                    style={[style.textButton, style.textCenter]}
-                    >Iniciar sesion</Text>
-                </Pressable>
-                
+                />
+
                 <Text style={[style.textCenter, style.freeText]}
                 >¿No tienes una cuenta?  <Text
                 style={[style.textRed, style.freeText]}>registrate</Text> </Text>
