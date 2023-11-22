@@ -1,12 +1,14 @@
 import React from 'react'
 import { View, Text, StyleSheet} from 'react-native'
 import Logo from './../../assets/svgLogo.svg'
+import { Ionicons } from '@expo/vector-icons'
 import theme from '../theme.js'
 
 const Header = () => {
     return (
         <View style={style.container}>
             <Logo width={50} height={60}/>
+            <Ionicons name="person-circle" size={50} color='red' />
         </View>
     )
 }

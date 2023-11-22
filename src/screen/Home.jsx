@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native'
+import { View, Text, Pressable, StyleSheet, Dimensions } from 'react-native'
 import Header from './../components/HeaderWithUser.jsx'
 import Footer from './../components/Footer.jsx'
 import Mapa from './../../assets/svgMapa.svg'
@@ -11,6 +11,10 @@ const { height, width } = Dimensions.get('window')
 const COLOR_SECONDARY = theme.colors.secondary
 
 const Home = () => {
+    //----------------------------  Hooks ----------------------------
+    //const [] = useState('')
+    //const [] = useState('')
+    //----------------------------  End hooks ----------------------------
     return (
         <View style={style.container}>
             <View style={style.header}>
@@ -21,20 +25,20 @@ const Home = () => {
 
                 <View style={style.image}>
                     <PortaPapeles width={750} height={150} />
-                    <TouchableOpacity style={style.button}>
+                    <Pressable style={style.button}>
                         <Text
                             style={[style.textButton, style.textCenter]}
                         >Asignación</Text>
-                    </TouchableOpacity>
+                    </Pressable>
                 </View>
 
                 <View style={style.image}>
                     <Mapa width={750} height={150} />
-                    <TouchableOpacity style={style.button}>
+                    <Pressable style={style.button}>
                         <Text
                             style={[style.textButton, style.textCenter]}
                         >Mapa</Text>
-                    </TouchableOpacity>
+                    </Pressable>
                 </View>
             </View>
 
@@ -47,7 +51,6 @@ const Home = () => {
 
 const style = StyleSheet.create({
     container: {
-        alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: theme.colors.primary,
         position: 'relative',
@@ -55,11 +58,12 @@ const style = StyleSheet.create({
         width: width
     },
     header: {
-        flex: 1
+        flex: 1,
+        marginRight: 20
     },
     content: {
-        position: 'absolute',
-
+        flex: 7,
+        justifyContent: 'space-evenly'
     },
     image: {
         alignItems: 'center',
@@ -67,7 +71,6 @@ const style = StyleSheet.create({
         backgroundColor: theme.colors.primary,
     },
     footer: {
-        position: 'absolute',
         bottom: 0,
         left: -10,
         right: 0
