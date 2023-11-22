@@ -5,8 +5,8 @@ const LabelLinking = (
     {
         link, 
         text,
-        containerStyle:undefined, 
-        contentStyle:undefined
+        containerStyle=undefined, 
+        contentStyle=undefined
     }
     ) => {    
     return (

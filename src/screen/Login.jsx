@@ -1,11 +1,11 @@
 import React,{useState, useEffect} from 'react'
 import {
-    AsyncStorage,
     Dimensions,
     StyleSheet, 
     Text, 
     View 
 } from 'react-native'
+import Constants from 'expo-constants'
 /*
 import {
     widthPercentageToDP as wp,
@@ -18,71 +18,86 @@ import Footer from '../components/Footer.jsx'
 import Textfield from '../components/Textfield.jsx'
 import ButtonText from '../components/ButtonText.jsx'
 import theme from '../theme.js'
-import {verifyInputUser, verifyInputPassword} from '../validationValidValues.js'
-//import { logFile } from './../logs.js'
-import * as Keychain from 'react-native-keychain'
-
+import {verifyInputUser, verifyInputPassword, verifyInputCode} from '../validationValidValues.js'
 
 const {height, width} = Dimensions.get('window')
 
 const COLOR_SECONDARY = theme.colors.secondary
 
 const Login = () => {
+    const user  = {
+        name:'Diego',
+        lastname:'Cardenas',
+        code:'1234567-1234',
+        email:'diego@correounivalle.edu.co',
+        password:'12345678A%'
+    }
     //----------------------------  Hooks ----------------------------
     const [inputUser, setInputUser] = useState('')
     const [inputPassword, setInputPassword] = useState('')
     const [rememberMe, setRememberMe] = useState(false)
 
-    useEffect(() => {
-        handlerLoadCredentialsStoraged();
-    },[])
+    // useEffect(() => {
+    //     handlerLoadCredentialsStoraged();
+    // },[])
+    
     //----------------------------  End hooks ----------------------------
     //---------------------------- Handlers ------------------------------
-    const handlerRememberMe = () => {
-        setRememberMe(!rememberMe)
-    }
-    const handlerLoadCredentialsStoraged = async () => {
-        try {
-            const credentials = await AsyncStorage.getItem('credentials')
-            if (credentials){
-                const {userName, password} = JSON.parse(credentials)
-                setInputUser(userName)
-                setInputPassword(password)
-                setRememberMe(true)
-            } 
-        } catch (error) {
-            console.error(error)
-        }
-    }
+    // const handlerRememberMe = () => {
+    //     setRememberMe(!rememberMe)
+    // }
+    // const handlerLoadCredentialsStoraged = async () => {
+    //     try {
+    //         const credentials = await AsyncStorage.getItem('credentials')
+    //         if (credentials){
+    //             const {userName, password} = JSON.parse(credentials)
+    //             setInputUser(userName)
+    //             setInputPassword(password)
+    //             setRememberMe(true)
+    //         } 
+    //     } catch (error) {
+    //         console.error(error)
+    //     }
+    // }
 
-    const saveCredentials = async () => {
-        try {            
-            if (rememberMe){
-                const credentials = JSON.stringify({userName,password})
-                await AsyncStorage.setItem('credentials', credentials)
-                await Keychain.setGenericPassword(userName, password)
-            }else{
-                return
-            }
-        } catch (error) {
-            console.error(error)
-        }
-    }
+    // const saveCredentials = async () => {
+    //     try {            
+    //         if (rememberMe){
+    //             const credentials = JSON.stringify({userName,password})
+    //             await AsyncStorage.setItem('credentials', credentials)
+    //             await Keychain.setGenericPassword(userName, password)
+    //         }else{
+    //             return
+    //         }
+    //     } catch (error) {
+    //         console.error(error)
+    //     }
+    // }
     //---------------------------- End handlers ------------------------------
-
+    const dataTrial = function (){
+        setRememberMe((prevRememberMe) => {
+            const newRememberMe = !prevRememberMe;
+            setInputUser(newRememberMe ? user.code : '');
+            setInputPassword(newRememberMe ? user.password : '');
+            return newRememberMe;
+        });
+    }
     return (
         <View style={style.container}>
             <View style={style.header}>
-                <Header/>
+                <Header 
+                screen='login' 
+                logoWitdh={240*1.4} 
+                logoHeight={200*1.4}/>
             </View>
 
             <View style={style.content}>
 
-                <Text style={style.text}>Sistema de asignaci&oacute;n y b&uacute;squeda de{'\n'}aulas</Text>
+                <Text style={style.title}>Sistema de asignaci&oacute;n y b&uacute;squeda de{'\n'}aulas</Text>
                 
                 <Textfield 
-                placeholder='Usuario'
-                handlerChangeText={() => verifyInputUser(inputUser, setInputUser)}
+                placeholder='Código'
+                handlerChangeText={() => verifyInputCode(inputUser, setInputUser)}
                 value={inputUser}
                 ></Textfield>
                 
@@ -97,13 +112,16 @@ const Login = () => {
                 checkedColor={COLOR_SECONDARY}
                 center 
                 containerStyle={style.checkBox}
-                onPress={handlerRememberMe}/>
+                onPress={ dataTrial }/>
                 
                 <ButtonText
                 text='Iniciar sesion'
                 containerStyle={style.button}
                 contentStyle={[style.textButton, style.textCenter]}
-                onPress={() => [verifyInputPassword(inputPassword, setInputPassword), saveCredentials()]}
+                onPress={() => {
+                    if(verifyInputPassword(inputPassword, setInputPassword)){
+                        return
+                }}}
                 />
 
                 <Text style={[style.textCenter, style.freeText]}
@@ -131,11 +149,12 @@ const style = StyleSheet.create({
         width: width,
     },
     header:{
-        flex:1
+        flex:3,
+        marginTop: Constants.statusBarHeight + 10,
+        alignItems: 'center'
     },
     content:{
-        flex:7,
-
+        flex:5
     },
     footer:{
         flex:2,
@@ -144,8 +163,8 @@ const style = StyleSheet.create({
         left:-10,
         right:0
     },
-    text:{
-        fontSize: 36,
+    title:{
+        fontSize: 14,
         textAlign: 'center',
         marginTop: 20,
         marginLeft: 30,
@@ -161,13 +180,6 @@ const style = StyleSheet.create({
         marginRight:'auto'
     },
     button:{
-        borderRadius:20,
-        backgroundColor:theme.colors.secondary,
-        justifyContent:'center',
-        paddingTop: 8,
-        paddingLeft: 8,
-        paddingRight: 8,
-        paddingBottom: 8,
         marginLeft: 'auto',
         marginRight: 'auto'
     },

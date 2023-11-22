@@ -3,9 +3,16 @@ import {View, TextInput, Pressable, StyleSheet} from 'react-native'
 import {Entypo} from '@expo/vector-icons'
 import theme from '../theme.js'
 
-const Passwordfield = (props) => {
+const Passwordfield = (
+    {
+        initSecure,
+        handlerChangeText,
+        value,
+        placeholder
+    }
+) => {
     //----------------------------- Hooks -----------------------------
-    const [secure, setSecure] = useState(props.initSecure)
+    const [secure, setSecure] = useState(initSecure)
     const [eyeIcon, setEyeIcon] = useState('eye')
     //----------------------------- end Hooks -------------------------
     const handlerEye = () => {
@@ -16,10 +23,11 @@ const Passwordfield = (props) => {
     return (
     <View style={style.container}>
         <TextInput
-        handlerChangeText={props.handlerChangeText}
+        handlerChangeText={handlerChangeText}
         secureTextEntry={secure}
-        placeholder={props.placeholder}
+        placeholder={placeholder}
         placeholderTextColor="#555555"
+        value={value}
         style={style.textInput}>
         </TextInput>
         <Pressable        

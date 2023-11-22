@@ -3,13 +3,26 @@ import { View, Text, StyleSheet} from 'react-native'
 import Logo from './../../assets/svgLogo.svg'
 import theme from '../theme.js'
 
-const Header = () => {
-    return (
+const Header = ({
+    screen,
+    logoWitdh,
+    logoHeight
+}) => {
+    if( screen === 'login' ){
+        return(
+            <View>
+                <Logo width={logoWitdh} height={logoHeight}/>
+            </View>
+        )
+    }
+    
+    if(screen === 'register'){
+        return  (
         <View style={style.container}>
-            <Logo width={50} height={60}/>
+            <Logo width={logoWitdh} height={logoHeight}/>
             <Text style={style.text}>SABA</Text>
         </View>
-    )
+    )} 
 }
 
 const style = StyleSheet.create({
