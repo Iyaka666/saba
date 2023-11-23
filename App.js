@@ -1,6 +1,6 @@
 import React from 'react'
-import Main from './src/components/Main.jsx'
-
+import MainStack from './src/Navigator/MainStack.js'
+import { SafeAreaView } from 'react-native';
 export default function App() {
-  return <Main/>
+  return <MainStack/>
 }
