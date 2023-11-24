@@ -1,6 +1,6 @@
 import React from 'react'
 import {View, Text, StyleSheet} from 'react-native'
-import LabelLinking from './LabelLinking.jsx'
+import Browser from './Browser.jsx'
 import theme from '../theme.js'
 
 const Footer = (props) => {
@@ -22,7 +22,8 @@ const Footer = (props) => {
             <Text style={TEXT_STYLE}>Grupo de trabajo SKYNET</Text>
             <Text style={[style.end, TEXT_STYLE]}>desarrollo-de-software@saba.co</Text>
             
-            <LabelLinking 
+            <Browser 
+            destiny='internet'
             link="https://forms.gle/tV5dJmQmqbgwX1M9A"
             text='PQRS' 
             contentStyle={style.link}/>
