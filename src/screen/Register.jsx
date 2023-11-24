@@ -13,7 +13,7 @@ import {
     validFieldEmpty
 } from './../validationValidValues.js'
 
-const Register = () => {
+const Register = ({navigation}) => {
     //----------------------------  Hooks ----------------------------
     const {inputName, setInputName} = useState()
     const {inputlastName, setInputLastname} = useState()
