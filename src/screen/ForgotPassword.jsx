@@ -4,7 +4,7 @@ import TextField from './../components/Textfield.jsx'
 import ButtonText from './../components/ButtonText.jsx'
 import {sendEmail} from './../service/sendEmail.js'
 
-const ForgotPassword = () => {
+const ForgotPassword = ({navigation}) => {
     return(
         <View>
             <Text>Ingresa tu dirección de correo electrónico</Text>

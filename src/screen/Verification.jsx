@@ -2,7 +2,7 @@ import React from 'react'
 import { View } from 'react-native'
 import {verifyResetPassword} from './../validationValidValues.js'
 
-const Verification = () => {
+const Verification = ({navigation}) => {
     return (
     <View>
         <Text>Ingresa tu número de Verificació  n</Text>

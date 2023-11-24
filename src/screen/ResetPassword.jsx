@@ -3,7 +3,7 @@ import { View } from 'react-native'
 import PasswordField from '../components/Passwordfield.jsx'
 import ButtonText from '../components/ButtonText.jsx'
 
-const ResetPassword = () => {
+const ResetPassword = ({navigation}) => {
     const conditionsPassword = 'Mínimo 8 cáracteres, un número, un caracter especial'
     return (
         <View>
