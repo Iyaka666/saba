@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from 'react'
+import React,{useState} from 'react'
 import {
     Dimensions,
     StyleSheet, 
@@ -17,24 +17,25 @@ import Header from '../components/Header.jsx'
 import Footer from '../components/Footer.jsx'
 import Textfield from '../components/Textfield.jsx'
 import ButtonText from '../components/ButtonText.jsx'
+import Browser from '../components/Browser.jsx'
 import theme from '../theme.js'
-import {verifyInputUser, verifyInputPassword, verifyInputCode} from '../validationValidValues.js'
+import {verifyPassword, verifyCode, validFieldEmpty} from '../validationValidValues.js'
 
 const {height, width} = Dimensions.get('window')
 
 const COLOR_SECONDARY = theme.colors.secondary
 
-const Login = () => {
-    const user  = {
+const Login = ({navigation}) => {
+    const userTrial  = {
         name:'Diego',
         lastname:'Cardenas',
         code:'1234567-1234',
         email:'diego@correounivalle.edu.co',
-        password:'12345678A%'
+        password:'12345678A!'
     }
     //----------------------------  Hooks ----------------------------
-    const [inputUser, setInputUser] = useState('')
-    const [inputPassword, setInputPassword] = useState('')
+    const [user, setUser] = useState('')
+    const [password, setPassword] = useState('')
     const [rememberMe, setRememberMe] = useState(false)
 
     // useEffect(() => {
@@ -51,8 +52,8 @@ const Login = () => {
     //         const credentials = await AsyncStorage.getItem('credentials')
     //         if (credentials){
     //             const {userName, password} = JSON.parse(credentials)
-    //             setInputUser(userName)
-    //             setInputPassword(password)
+    //             setUser(userName)
+    //             setPassword(password)
     //             setRememberMe(true)
     //         } 
     //     } catch (error) {
@@ -77,10 +78,17 @@ const Login = () => {
     const dataTrial = function (){
         setRememberMe((prevRememberMe) => {
             const newRememberMe = !prevRememberMe;
-            setInputUser(newRememberMe ? user.code : '');
-            setInputPassword(newRememberMe ? user.password : '');
+            setUser(newRememberMe ? userTrial.code : '');
+            setPassword(newRememberMe ? userTrial.password : '');
             return newRememberMe;
         });
+    }
+
+    const handlerLogin = () => {
+        if( verifyPassword(password, setPassword) &&
+            validFieldEmpty(password, user)){
+                navigation.navigate('Home')
+        }
     }
     return (
         <View style={style.container}>
@@ -93,17 +101,16 @@ const Login = () => {
 
             <View style={style.content}>
 
-                <Text style={style.title}>Sistema de asignaci&oacute;n y b&uacute;squeda de{'\n'}aulas</Text>
+                <Text style={style.title}>Sistema de asignación y {'\n'}búsqueda de aulas</Text>
                 
                 <Textfield 
                 placeholder='Código'
-                handlerChangeText={() => verifyInputCode(inputUser, setInputUser)}
-                value={inputUser}
+                value={user}
                 ></Textfield>
                 
                 <Passwordfield 
-                placeholder='Contrase&ntilde;a'
-                value={inputPassword}
+                placeholder='Contraseña'
+                value={password}
                 initSecure/>
                 
                 <CheckBox 
@@ -118,18 +125,19 @@ const Login = () => {
                 text='Iniciar sesion'
                 containerStyle={style.button}
                 contentStyle={[style.textButton, style.textCenter]}
-                onPress={() => {
-                    if(verifyInputPassword(inputPassword, setInputPassword)){
-                        return
-                }}}
+                onPress={ handlerLogin }
                 />
 
                 <Text style={[style.textCenter, style.freeText]}
-                >¿No tienes una cuenta?  <Text
-                style={[style.textRed, style.freeText]}>registrate</Text> </Text>
+                >¿No tienes una cuenta?  
+                <Browser 
+                destiny='interscreens'
+                navigation={navigation}
+                navigate='Register'
+                contentStyle={[style.freeText, style.center]}> registrate </Browser></Text>
                 
                 <Text 
-                style={[style.textRed,style.textCenter]}>¿Olvidaste tu contrase&ntilde;a?</Text>
+                style={[style.textRed,style.textCenter]}>¿Olvidaste tu contraseña?</Text>
             </View>
             
             <View style={style.footer}>
