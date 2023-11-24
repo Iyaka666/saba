@@ -1,5 +1,5 @@
 //Valida las restriciones de contraseña para el usuario
-export const isPasswordValid = new RegExp("^(?=.*[A-Z])(?=.*[0-9])(?=.*\W).{8,}$")
+export const isPasswordValid = new RegExp("^.{8,}$")
 
 //Valida que sólo pueda ingresar texto pensada para el campo de ingreso de nombres y apellidos
 export const isOnlyText = new RegExp("^[a-zA-ZÁ-Úá-úüÜñÑ\s]+$")
