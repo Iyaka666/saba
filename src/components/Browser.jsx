@@ -1,5 +1,6 @@
 import React from 'react'
-import { View, Text, Linking, Pressable } from 'react-native'
+import {Text, Linking, Pressable } from 'react-native'
+import { allowMultiStyle } from '../functionsFronted'
 
 const Browser = (
     {
@@ -12,15 +13,19 @@ const Browser = (
         navigation
     }
     ) => { 
-        return(<View style={containerStyle}>
-            <Pressable onPress={() => {
+        const fnContainerStyle = allowMultiStyle(null, containerStyle)
+        const fnContentStyle = allowMultiStyle(null, contentStyle)
+
+        return(
+        <Pressable
+            style={fnContainerStyle} 
+            onPress={() => {
                 if(destiny === 'internet') Linking.openURL(link)
                 if(destiny === 'interscreens') navigation.navigate(navigate)
-                throw new Error('No se ha ingresado ningún destino') 
+                throw new Error('Componente Browser - No se ha ingresado ningún destino') 
             }}>
-                <Text style={contentStyle}>{text}</Text>
-            </Pressable>
-        </View>
+                <Text style={fnContentStyle}>{text}</Text>
+        </Pressable>
         )
 }
 
