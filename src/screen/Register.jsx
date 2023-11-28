@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import { Alert,View,Text} from 'react-native'
-import TextField from '../components/containers/generals/Textfield.jsx'
-import PasswordField from '../components/containers/generals/Passwordfield.jsx'
+import TextField from '../components/Textfield.jsx'
+import PasswordField from '../components/Passwordfield.jsx'
 import ButtonText from '../components/ButtonText.jsx'
 import {
     verifyInputName, 
