@@ -2,23 +2,29 @@ import React from 'react'
 import {View, Text, StyleSheet} from 'react-native'
 import Browser from './Browser.jsx'
 import theme from '../theme.js'
+import { allowMultiStyle } from '../functionsFronted.js'
 
-const Footer = (props) => {
+const Footer = (
+    {
+        noPqrs,
+        containerStyle
+    }
+    ) => {
     const TEXT_STYLE = style.text
     handlerGoLink = () => null
-    
-    if(props.noPqrs){
+    const fnContainerStyle = allowMultiStyle(style.container, containerStyle)
+    if(noPqrs){
     return (
-        <View style={style.container}>
+        <View style={fnContainerStyle}>
             <Text style={TEXT_STYLE}>Grupo de trabajo SKYNET</Text>
             <Text style={[style.end, TEXT_STYLE]}>desarrollo-de-software@saba.co</Text>
             <Text style={[style.init, TEXT_STYLE]}>2023</Text>
             <Text style={TEXT_STYLE}>&copy;</Text>
         </View>
     )
-    }else        
+    }else
         return(
-            <View style={style.container}>
+            <View style={fnContainerStyle}>
             <Text style={TEXT_STYLE}>Grupo de trabajo SKYNET</Text>
             <Text style={[style.end, TEXT_STYLE]}>desarrollo-de-software@saba.co</Text>
             
@@ -26,7 +32,7 @@ const Footer = (props) => {
             destiny='internet'
             link="https://forms.gle/tV5dJmQmqbgwX1M9A"
             text='PQRS' 
-            contentStyle={style.link}/>
+            contentStyle={TEXT_STYLE}/>
             
             <Text style={[style.init, TEXT_STYLE]}>2023</Text>
             <Text style={TEXT_STYLE}>&copy;</Text>
@@ -47,9 +53,6 @@ const style = StyleSheet.create({
     },
     init:{
         marginTop:10
-    },
-    link:{
-        textDecoration:'underline'
     }
 })
 

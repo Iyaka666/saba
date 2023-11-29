@@ -1,16 +1,15 @@
 import React,{useState} from 'react'
 import {
-    Dimensions,
     StyleSheet, 
     Text, 
     View 
 } from 'react-native'
 import Constants from 'expo-constants'
-/*
+
 import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp
-} from 'react-native-responsive-screen' */
+} from 'react-native-responsive-screen'
 import { CheckBox } from '@rneui/themed'
 import Passwordfield from './../components/Passwordfield.jsx'
 import Header from '../components/Header.jsx'
@@ -19,9 +18,14 @@ import Textfield from '../components/Textfield.jsx'
 import ButtonText from '../components/ButtonText.jsx'
 import Browser from '../components/Browser.jsx'
 import theme from '../theme.js'
-import {verifyPassword, verifyCode, validFieldEmpty} from '../validationValidValues.js'
-
-const {height, width} = Dimensions.get('window')
+import {
+    verifyPassword, 
+    verifyCode, 
+    validFieldEmpty
+} from '../validationValidValues.js'
+import {textfield} from '../styles/textField.js'
+import { footer } from '../styles/footer.js'
+import { button } from '../styles/button.js'
 
 const COLOR_SECONDARY = theme.colors.secondary
 
@@ -85,9 +89,13 @@ const Login = ({navigation}) => {
     }
 
     const handlerLogin = () => {
-        if( verifyPassword(password, setPassword) &&
-            validFieldEmpty(password, user)){
-                navigation.navigate('Home')
+        if( 
+            verifyPassword(password, setPassword) &&
+            verifyCode(user, setUser) &&
+            validFieldEmpty(password, user)
+            )
+        {
+            navigation.navigate('Home')
         }
     }
     return (
@@ -100,18 +108,23 @@ const Login = ({navigation}) => {
             </View>
 
             <View style={style.content}>
-
-                <Text style={style.title}>Sistema de asignación y {'\n'}búsqueda de aulas</Text>
+                <View style={style.title}>
+                    <Text>Sistema de asignación y {'\n'}búsqueda de aulas</Text>
+                </View>
                 
                 <Textfield 
                 placeholder='Código'
                 value={user}
-                ></Textfield>
+                containerStyle={textfield.textfields}
+                contentStyle={textfield.contentTextField}/>
                 
                 <Passwordfield 
                 placeholder='Contraseña'
                 value={password}
-                initSecure/>
+                initSecure
+                containerStyle={textfield.textfields}
+                contentStyle={textfield.contentTextField}
+                />
                 
                 <CheckBox 
                 title="Recordarme" 
@@ -123,26 +136,32 @@ const Login = ({navigation}) => {
                 
                 <ButtonText
                 text='Iniciar sesion'
-                containerStyle={style.button}
-                contentStyle={[style.textButton, style.textCenter]}
+                containerStyle={button.style}
+                contentStyle={[button.text, style.textCenter]}
                 onPress={ handlerLogin }
                 />
-
-                <Text style={[style.textCenter, style.freeText]}
-                >¿No tienes una cuenta?  
+                
                 <Browser 
+                text='¿No tienes una cuenta? registrate'
                 destiny='interscreens'
                 navigation={navigation}
                 navigate='Register'
-                contentStyle={[style.freeText, style.center]}> registrate </Browser></Text>
+                contentStyle={[style.textCenter, style.freeText]}/>
                 
-                <Text 
-                style={[style.textRed,style.textCenter]}>¿Olvidaste tu contraseña?</Text>
+                <Browser
+                text='¿Olvidaste tu contraseña?'
+                destiny='interscreens'
+                navigation={navigation}
+                navigate='ForgotPassword'
+                contentStyle={[style.textRed,style.textCenter]}
+                />
+
             </View>
             
             <View style={style.footer}>
                 <Footer 
-                noPqrs/>
+                noPqrs
+                containerStyle={[style.footer, footer.style]}/>
             </View>
         </View>
     )
@@ -153,54 +172,47 @@ const style = StyleSheet.create({
         justifyContent:'space-between',
         backgroundColor:theme.colors.primary,
         position: 'relative',
-        height:height,
-        width: width,
+        height:hp(100),
+        width: wp(100),
     },
     header:{
         flex:3,
-        marginTop: Constants.statusBarHeight + 10,
+        marginTop: Constants.statusBarHeight + hp(5),
         alignItems: 'center'
     },
     content:{
         flex:5
     },
     footer:{
-        flex:2,
-        position:'absolute',
-        bottom:0,
-        left:-10,
-        right:0
+        flex:2
     },
     title:{
-        fontSize: 14,
+        fontSize: hp(1.7),
         textAlign: 'center',
-        marginTop: 20,
-        marginLeft: 30,
-        marginRight: 30
+        marginTop: hp(9),
+        marginLeft: 'auto',
+        marginRight: 'auto'
     },
     textRed:{
         color:theme.colors.secondary
     },
     checkBox:{
-        backgroundColor:theme.colors.primary,
+        backgroundColor: theme.colors.primary,
         color: theme.colors.secondary,
         marginLeft:'auto',
-        marginRight:'auto'
-    },
-    button:{
-        marginLeft: 'auto',
-        marginRight: 'auto'
-    },
-    textButton:{
-        color:theme.colors.primary,
-        fontWeight: theme.fontWeight.bold
+        marginRight:'auto',
+        marginTop: hp(-1.5),
+        paddingTop: hp(0),
+        paddingBottom: hp(0),
+        paddingLeft: wp(2),
+        paddingRight: wp(2)
     },
     textCenter:{
         textAlign:'center'
     },
     freeText:{
-        marginTop: 25,
-        marginBottom: 15
+        marginTop: hp(1),
+        marginBottom: hp(1)
     }
 })
 

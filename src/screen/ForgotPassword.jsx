@@ -2,7 +2,6 @@ import React from 'react'
 import { View, Text} from 'react-native'
 import TextField from './../components/Textfield.jsx'
 import ButtonText from './../components/ButtonText.jsx'
-import {sendEmail} from './../service/sendEmail.js'
 
 const ForgotPassword = ({navigation}) => {
     return(

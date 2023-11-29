@@ -1,5 +1,6 @@
 import {View, TextInput, StyleSheet} from 'react-native'
 import theme from '../theme.js'
+import { allowMultiStyle } from '../functionsFronted.js'
 
 const TextField = (
     {
@@ -8,13 +9,19 @@ const TextField = (
         autoCapitalize = 'none',
         inputMode = 'text',
         keyboardType = 'default',
+        containerStyle,
+        contentStyle,
         handlerChangeText
     }
 ) => {
+    const fnContainerStyle = allowMultiStyle(containerStyle)
+
+    const fnContentStyle = allowMultiStyle(style.input, contentStyle)
+
     return(
-    <View>
+    <View style={fnContainerStyle}>
         <TextInput 
-        style={style.input}
+        style={fnContentStyle}
         placeholder={placeholder}
         placeholderTextColor='#555555'
         autoCapitalize={autoCapitalize}
@@ -29,13 +36,6 @@ const TextField = (
 
 const style = StyleSheet.create({
     input:{
-        marginTop:20,
-        marginLeft:theme.margins.fieldsL,
-        marginRight:theme.margins.fieldsR,
-        paddingLeft:theme.paddings.fields,
-        paddingRight:theme.paddings.fields,
-        paddingTop:theme.paddings.fieldsVertical,
-        paddingBottom:theme.paddings.fieldsVertical,
         fontSize:theme.fontSizes.body,
         color:theme.colors.textPrimary,
         borderColor:theme.colors.secondary,
