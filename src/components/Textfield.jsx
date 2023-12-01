@@ -1,28 +1,34 @@
 import {View, TextInput, StyleSheet} from 'react-native'
 import theme from '../theme.js'
+import { allowMultiStyle } from '../functionsFronted.js'
 
-const props = {
-    placeholder:"",
-    value:"",
-    autoCapitalize:'none',
-    inputMode:'text',
-    keyboardType:'default',
-    handlerChangeText: () => null
-}
+const TextField = (
+    {
+        placeholder,
+        value,
+        autoCapitalize = 'none',
+        inputMode = 'text',
+        keyboardType = 'default',
+        containerStyle,
+        contentStyle,
+        handlerChangeText
+    }
+) => {
+    const fnContainerStyle = allowMultiStyle(containerStyle)
 
-const TextField = (props) => {
+    const fnContentStyle = allowMultiStyle(style.input, contentStyle)
+
     return(
-    <View>
+    <View style={fnContainerStyle}>
         <TextInput 
-        style={style.input}
-        placeholder={props.placeholder}
+        style={fnContentStyle}
+        placeholder={placeholder}
         placeholderTextColor='#555555'
-        autoCapitalize={props.autoCapitalize}
-        inputMode={props.inputMode}
-        keyboardType={props.keyboardType}
-        value={props.value}
-
-        onChangeText={props.handlerChangeText}
+        autoCapitalize={autoCapitalize}
+        inputMode={inputMode}
+        keyboardType={keyboardType}
+        value={value}
+        onChangeText={handlerChangeText}
         ></TextInput>
     </View>
     )
@@ -30,19 +36,12 @@ const TextField = (props) => {
 
 const style = StyleSheet.create({
     input:{
-        marginTop:20,
-        marginLeft:theme.margins.fieldsL,
-        marginRight:theme.margins.fieldsR,
-        paddingLeft:theme.paddings.fields,
-        paddingRight:theme.paddings.fields,
-        paddingTop:theme.paddings.fieldsVertical,
-        paddingBottom:theme.paddings.fieldsVertical,
         fontSize:theme.fontSizes.body,
         color:theme.colors.textPrimary,
         borderColor:theme.colors.secondary,
         borderWidth: 1,
         borderRadius: 8,
-        fontWeight:theme.fontWeight.normal
+        fontWeight:theme.fontWeight.thin
     }
 })
 

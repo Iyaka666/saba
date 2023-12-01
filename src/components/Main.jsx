@@ -1,7 +1,7 @@
 import React from 'react'
 import {View, StyleSheet} from 'react-native'
 import Constants from 'expo-constants'
-import Login from './containers/Login.jsx'
+import Login from './../screen/Login.jsx'
 import theme from './../theme.js'
 
 const Main = () => {

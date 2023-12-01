@@ -17,14 +17,6 @@ const theme = {
         normal: '400',
         bold:   '700'
     },
-    margins:{
-        fieldsR:40,
-        fieldsL:40
-    },
-    paddings:{
-        fields:10,
-        fieldsVertical:4
-    },
     buttons:{
         radioButton: 10,
         backgroundColor:COLOR_SECONDARY

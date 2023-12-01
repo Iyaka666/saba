@@ -1,10 +1,30 @@
 import React, {useState} from 'react'
-import {View, Text, Pressable} from 'react-native'
-import TextField from '../components/containers/generals/Textfield.jsx'
-import PasswordField from '../components/containers/generals/Passwordfield.jsx'
-import { isOnlyText, isPasswordValid, isValidCode, isValidEmail } from '../regex.js'
+import { Alert,View,Text, StyleSheet} from 'react-native'
+import {
+    widthPercentageToDP as wp,
+    heightPercentageToDP as hp
+} from 'react-native-responsive-screen'
+import Constants from 'expo-constants'
+import TextField from '../components/Textfield.jsx'
+import PasswordField from '../components/Passwordfield.jsx'
+import ButtonText from '../components/ButtonText.jsx'
+import Header from '../components/Header.jsx'
+import Footer from '../components/Footer.jsx'
+import Browser from '../components/Browser.jsx'
+import {
+    verifyInputName, 
+    verifyInputLastname, 
+    verifyInputCode,
+    verifyInputEmail,
+    verifyInputPassword,
+    validEqualPassword,
+    validFieldEmpty
+} from './../validationValidValues.js'
+import {textfield} from './../styles/textField.js'
+import { footer } from '../styles/footer.js'
+import { button } from '../styles/button.js'
 
-const Register = () => {
+const Register = ({navigation}) => {
     //----------------------------  Hooks ----------------------------
     const {inputName, setInputName} = useState()
     const {inputlastName, setInputLastname} = useState()
@@ -13,122 +33,111 @@ const Register = () => {
     const {inputPassword, setInputPassword} = useState()
     const {inputConfirPassword, setInputConfirPassword} = useState()
     //----------------------------  End hooks ----------------------------
-    //---------------------------  Functions  ----------------------------
-    const verifyInputName = text => {
-        setInputName(text)
-        if(!isOnlyText.test(text)){
-            Alert.alert(
-                title='Nombres Invalido',
-                message='El nombre solo puede contener letras y acentos'
-                )
-            setInputName('')
-        }
-    }
-    const verifyInputLastname = text => {
-        setInputLastname(text)
-        if(!isOnlyText.test(text)){
-            Alert.alert(
-                title='Apellidos Invalidos',
-                message='El apellido solo puede contener letras y acentos'
-                )
-            setInputLastname('')
-        }
-    }
-    const verifyInputCode = text => {
-        setInputCode(text)
-        if(!isValidCode.test(text)){
-            Alert.alert(
-                title='Código Invalido',
-                message='Debe contener mínimo 8 letras, tener un número y tener un caracter especial ej:( !,",#,$,%,&,/,(,) )'
-                )
-            setInputCode('')
-        }
-    }
-    const verifyInputEmail = text => {
-        setInputEmail(text)
-        if(!isValidEmail.test(text)){
-            Alert.alert(
-                title='Correo electrónico invalido',
-                message='Verifique que solo tenga simbolos como "-","." y "@" '
-                )
-            setInputEmail('')
-        }
-    }
-    const verifyInputPassword = () => {
-        if(!isPasswordValid.test(inputPassword)){
-            Alert.alert(title='Contraseña invalida',
-            message='La contraseña debe tener ')
-            setInputConfirPassword('')
-            setInputPassword('')
-        }
-    } 
-    const validEqualPassword = () => {
-        if(inputPassword !== inputConfirPassword){
-            Alert.alert(title='No hay Coincidencia',
-            message='Las contraseñas no coinciden')
-        }
-    }
-    const validFieldEmpty = () => {
-        if( inputName.trim() === '' ||
-            inputlastName.trim() === '' || 
-            inputCode.trim() === '' || 
-            inputEmail === '' ||
-            inputPassword === '' ||
-            inputConfirPassword === '') {
-                Alert.alert(title='Algún campo de texto vacío',
-                message='No debe quedar ningún campo de texto vacío')
-            }
-    }
-    //---------------------------  End functions  ----------------------------
-
     return(
-    <View>
-        <View>
-            <Header></Header>
+    <View style={style.container}>
+        <View style={style.header}>
+            <Header 
+            screen='noLogin'/>
         </View>
 
-        <View>
+        <View style={style.form}>
             <TextField 
             placeholder='Nombres' 
             autoCapitalize='words' 
             value={inputName}
-            handlerChangeText={verifyInputName}/>
+            containerStyle={textfield.textfields}
+            contentStyle={textfield.contentTextField}
+            handlerChangeText={() => verifyInputName(inputName, setInputName)}/>
             <TextField 
             placeholder='Apellidos' 
             autoCapitalize='words'
             value={inputlastName} 
-            handlerChangeText={verifyInputLastname}/>
+            containerStyle={textfield.textfields}
+            contentStyle={textfield.contentTextField}
+            handlerChangeText={() => verifyInputLastname(inputlastName, setInputLastname)}/>
             <TextField 
             placeholder='Código de estudiante'
             value={inputCode} 
-            handlerChangeText={verifyInputCode}/>
+            containerStyle={textfield.textfields}
+            contentStyle={textfield.contentTextField}
+            handlerChangeText={() => verifyInputCode(inputCode, setInputCode)}/>
             <TextField 
             placeholder='correo electrónico'
-            value={inputEmail} 
-            handlerChangeText={verifyInputEmail}/>
+            value={inputEmail}
+            containerStyle={textfield.textfields}
+            contentStyle={textfield.contentTextField} 
+            handlerChangeText={() => verifyInputEmail(inputEmail, setInputEmail)}/>
             <PasswordField 
             placeholder='contraseña' 
             initSecure
-            handlerChangeText={verifyInputPassword}
+            containerStyle={textfield.textfields}
+            contentStyle={textfield.contentTextField}
+            handlerChangeText={() => verifyInputPassword(inputPassword, setInputPassword)}
             />
             <PasswordField 
             placeholder='confirmar contraseña' 
             initSecure
-            handlerChangeText={validEqualPassword}
+            containerStyle={textfield.textfields}
+            contentStyle={textfield.contentTextField}
+            handlerChangeText={() => validEqualPassword(inputPassword, inputConfirPassword)}
             />
-            <Pressable
-            onPress={validFieldEmpty}
-            >
-                <Text>Registrar</Text>
-            </Pressable>
-            <Text>¿Ya tienes una cuenta? <Text>inicia sesion</Text></Text>
+            <ButtonText
+            text='Registrar'
+            containerStyle={button.style}
+            contentStyle={[button.text, style.textCenter]}
+            onPress={() => {
+                if( validFieldEmpty(
+                    inputCode,
+                    inputConfirPassword,
+                    inputEmail,
+                    inputName,
+                    inputPassword,
+                    inputlastName) ) {
+                        Alert.alert(title='Aviso', message='Ha sido registrado con éxito')
+                    }}}
+            />
+            <Browser
+            text='¿Ya tienes una cuenta? inicia sesión'
+            destiny='interscreens'
+            navigation={navigation}
+            navigate='Login'
+            contentStyle={[style.textCenter,style.freeText]}
+            />
         </View>
         
-        <View>
-            <Footer></Footer>
+        <View style={style.footer}>
+            <Footer
+            containerStyle={footer.style}/>
         </View>
     </View>
     )
 }
+
+const style = StyleSheet.create({
+    container:{
+        height: hp(100),
+        witdth: wp(100),
+        gap: hp(5)
+    },
+    header:{
+        flex: 1,
+        marginTop: Constants.statusBarHeight + hp(5),
+        alignItems: 'center'
+    },
+    content:{
+        flex:7
+    },
+    footer:{
+        flex:2
+    },
+    textCenter:{
+        textAlign:'center'
+    },
+    freeText:{
+        marginTop:hp(1),
+        marginBottom:hp(1)
+    }
+
+})
 
 export default Register

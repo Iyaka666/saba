@@ -1,85 +1,167 @@
 import React,{useState} from 'react'
-import {View, Text, Pressable, StyleSheet, Dimensions, Alert} from 'react-native'
+import {
+    StyleSheet, 
+    Text, 
+    View 
+} from 'react-native'
+import Constants from 'expo-constants'
+
+import {
+    widthPercentageToDP as wp,
+    heightPercentageToDP as hp
+} from 'react-native-responsive-screen'
 import { CheckBox } from '@rneui/themed'
-//import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen'
 import Passwordfield from './../components/Passwordfield.jsx'
 import Header from '../components/Header.jsx'
 import Footer from '../components/Footer.jsx'
 import Textfield from '../components/Textfield.jsx'
+import ButtonText from '../components/ButtonText.jsx'
+import Browser from '../components/Browser.jsx'
 import theme from '../theme.js'
-import { isNumberAndOthers, isPasswordValid } from '../regex.js'
-
-const {height, width} = Dimensions.get('window')
+import {
+    verifyPassword, 
+    verifyCode, 
+    validFieldEmpty
+} from '../validationValidValues.js'
+import {textfield} from '../styles/textField.js'
+import { footer } from '../styles/footer.js'
+import { button } from '../styles/button.js'
 
 const COLOR_SECONDARY = theme.colors.secondary
 
-const Login = () => {
+const Login = ({navigation}) => {
+    const userTrial  = {
+        name:'Diego',
+        lastname:'Cardenas',
+        code:'1234567-1234',
+        email:'diego@correounivalle.edu.co',
+        password:'12345678A!'
+    }
     //----------------------------  Hooks ----------------------------
-    const [inputUser, setInputUser] = useState('')
-    const [inputPassword, setInputPassword] = useState('')
+    const [user, setUser] = useState('')
+    const [password, setPassword] = useState('')
+    const [rememberMe, setRememberMe] = useState(false)
+
+    // useEffect(() => {
+    //     handlerLoadCredentialsStoraged();
+    // },[])
+    
     //----------------------------  End hooks ----------------------------
-    //---------------------------  Functions  ----------------------------
-    const verifyInputUser = (text) => {
-        setInputUser(text)
-        if(!isNumberAndOthers.test(text)) {
-            Alert.alert(
-                title='Usuario invalido', 
-                message='El usuario solo acepta números y "-" ejemplo: 12345678-9'
-                )
-            setInputUser('')
-        }
+    //---------------------------- Handlers ------------------------------
+    // const handlerRememberMe = () => {
+    //     setRememberMe(!rememberMe)
+    // }
+    // const handlerLoadCredentialsStoraged = async () => {
+    //     try {
+    //         const credentials = await AsyncStorage.getItem('credentials')
+    //         if (credentials){
+    //             const {userName, password} = JSON.parse(credentials)
+    //             setUser(userName)
+    //             setPassword(password)
+    //             setRememberMe(true)
+    //         } 
+    //     } catch (error) {
+    //         console.error(error)
+    //     }
+    // }
+
+    // const saveCredentials = async () => {
+    //     try {            
+    //         if (rememberMe){
+    //             const credentials = JSON.stringify({userName,password})
+    //             await AsyncStorage.setItem('credentials', credentials)
+    //             await Keychain.setGenericPassword(userName, password)
+    //         }else{
+    //             return
+    //         }
+    //     } catch (error) {
+    //         console.error(error)
+    //     }
+    // }
+    //---------------------------- End handlers ------------------------------
+    const dataTrial = function (){
+        setRememberMe((prevRememberMe) => {
+            const newRememberMe = !prevRememberMe;
+            setUser(newRememberMe ? userTrial.code : '');
+            setPassword(newRememberMe ? userTrial.password : '');
+            return newRememberMe;
+        });
     }
 
-    const verifyInputPassword = (text) => {
-        setInputPassword(text)
-        if(!isPasswordValid.test(text)) {
-            Alert.alert(
-                title='Contraseña Invalida',
-                message='Debe contener mínimo 8 letras, tener un número y tener un caracter especial ej:( !,",#,$,%,&,/,(,) )'
-                )
-            setInputPassword('')
+    const handlerLogin = () => {
+        if( 
+            verifyPassword(password, setPassword) &&
+            verifyCode(user, setUser) &&
+            validFieldEmpty(password, user)
+            )
+        {
+            navigation.navigate('Home')
         }
     }
-    //---------------------------  End functions  ----------------------------
     return (
         <View style={style.container}>
             <View style={style.header}>
-                <Header></Header>
+                <Header 
+                screen='login' 
+                logoWitdh={240*1.4} 
+                logoHeight={200*1.4}/>
             </View>
 
             <View style={style.content}>
-                <Text style={style.text}>Sistema de asignaci&oacute;n y b&uacute;squeda de{'\n'}aulas</Text>
+                <View style={style.title}>
+                    <Text>Sistema de asignación y {'\n'}búsqueda de aulas</Text>
+                </View>
+                
                 <Textfield 
-                placeholder='Usuario'
-                handlerChangeText={verifyInputUser}
-                value={inputUser}
-                ></Textfield>
+                placeholder='Código'
+                value={user}
+                containerStyle={textfield.textfields}
+                contentStyle={textfield.contentTextField}/>
+                
                 <Passwordfield 
-                placeholder='Contrase&ntilde;a'
-                value={inputPassword}
-                initSecure/>
+                placeholder='Contraseña'
+                value={password}
+                initSecure
+                containerStyle={textfield.textfields}
+                contentStyle={textfield.contentTextField}
+                />
+                
                 <CheckBox 
                 title="Recordarme" 
+                checked={rememberMe}
                 checkedColor={COLOR_SECONDARY}
                 center 
-                containerStyle={style.checkBox}/>
-                <Pressable 
-                style={style.button}
-                onPress={verifyInputPassword}
-                >
-                    <Text 
-                    style={[style.textButton, style.textCenter]}
-                    >Iniciar sesion</Text>
-                </Pressable>
-                <Text style={[style.textCenter, style.freeText]}
-                >¿No tienes una cuenta?  <Text
-                style={[style.textRed, style.freeText]}>registrate</Text> </Text>
-                <Text 
-                style={[style.textRed,style.textCenter]}>¿Olvidaste tu contrase&ntilde;a?</Text>
+                containerStyle={style.checkBox}
+                onPress={ dataTrial }/>
+                
+                <ButtonText
+                text='Iniciar sesion'
+                containerStyle={button.style}
+                contentStyle={[button.text, style.textCenter]}
+                onPress={ handlerLogin }
+                />
+                
+                <Browser 
+                text='¿No tienes una cuenta? registrate'
+                destiny='interscreens'
+                navigation={navigation}
+                navigate='Register'
+                contentStyle={[style.textCenter, style.freeText]}/>
+                
+                <Browser
+                text='¿Olvidaste tu contraseña?'
+                destiny='interscreens'
+                navigation={navigation}
+                navigate='ForgotPassword'
+                contentStyle={[style.textRed,style.textCenter]}
+                />
+
             </View>
             
             <View style={style.footer}>
-                <Footer></Footer>
+                <Footer 
+                noPqrs
+                containerStyle={[style.footer, footer.style]}/>
             </View>
         </View>
     )
@@ -90,58 +172,47 @@ const style = StyleSheet.create({
         justifyContent:'space-between',
         backgroundColor:theme.colors.primary,
         position: 'relative',
-        height:height,
-        width: width,
+        height:hp(100),
+        width: wp(100),
     },
     header:{
-        flex:1
+        flex:3,
+        marginTop: Constants.statusBarHeight + hp(5),
+        alignItems: 'center'
     },
     content:{
-        flex:7,
-
+        flex:5
     },
     footer:{
-        flex:2,
-        position:'absolute',
-        bottom:0,
-        left:-10,
-        right:0
+        flex:2
     },
-    text:{
-        fontSize: 36,
+    title:{
+        fontSize: hp(1.7),
         textAlign: 'center',
-        marginTop: 20,
-        marginLeft: 30,
-        marginRight: 30
+        marginTop: hp(9),
+        marginLeft: 'auto',
+        marginRight: 'auto'
     },
     textRed:{
         color:theme.colors.secondary
     },
     checkBox:{
-        backgroundColor:theme.colors.primary,
-        color: theme.colors.secondary
-    },
-    button:{
-        borderRadius:20,
-        backgroundColor:theme.colors.secondary,
-        justifyContent:'center',
-        paddingTop: 8,
-        paddingLeft: 8,
-        paddingRight: 8,
-        paddingBottom: 8,
-        marginLeft: 100,
-        marginRight: 100
-    },
-    textButton:{
-        color:theme.colors.primary,
-        fontWeight: theme.fontWeight.bold
+        backgroundColor: theme.colors.primary,
+        color: theme.colors.secondary,
+        marginLeft:'auto',
+        marginRight:'auto',
+        marginTop: hp(-1.5),
+        paddingTop: hp(0),
+        paddingBottom: hp(0),
+        paddingLeft: wp(2),
+        paddingRight: wp(2)
     },
     textCenter:{
         textAlign:'center'
     },
     freeText:{
-        marginTop: 25,
-        marginBottom: 15
+        marginTop: hp(1),
+        marginBottom: hp(1)
     }
 })
 

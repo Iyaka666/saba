@@ -1,31 +1,53 @@
 import React from 'react'
 import { View, Text, StyleSheet} from 'react-native'
-import Logo from './../../../assets/svgLogo.svg'
+import {
+    heightPercentageToDP as hp,
+    widthPercentageToDP as wp
+} from 'react-native-responsive-screen'
+import Logo from './../../assets/svgLogo.svg'
 import theme from '../theme.js'
 
-const Header = () => {
-    return (
-        <View style={style.container}>
-            <Logo width={50} height={60}/>
-            <Text style={style.text}>SABA</Text>
+const Header = ({
+    screen,
+    logoWitdh,
+    logoHeight
+}) => {
+    if( screen === 'login' ){
+        return(
+            <View>
+                <Logo width={logoWitdh} height={logoHeight}/>
+            </View>
+        )
+    }
+    
+    if(screen === 'noLogin'){
+        return  (
+        <View style={styleNoLogin.container}>
+            <View>
+                <Logo width={wp(20)} height={hp(10)}/>
+            </View>
+
+            <View style={styleNoLogin.textContainer}>
+                    <Text style={styleNoLogin.text}>SABA</Text>
+            </View>
         </View>
-    )
+    )} 
 }
 
-const style = StyleSheet.create({
+const styleNoLogin = StyleSheet.create({
     container:{
-        flexDirection:'row',
-        justifyContent:'center',
-        alignItems:'center',
+        flexDirection: 'row'
     },
     text:{
-        textAlign:'center',
-        fontSize: 72,
+        fontSize: hp(4),
         color:theme.colors.secondary,
         fontWeight: theme.fontWeight.bold,
         textShadowColor: '#222222',
         textShadowOffset: { width: -1, height: 2 },
         textShadowRadius: 3
+    },
+    textContainer:{
+        alignSelf:'center'
     }
 })
 

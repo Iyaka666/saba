@@ -1,37 +1,49 @@
 import React, { useState } from 'react'
 import {View, TextInput, Pressable, StyleSheet} from 'react-native'
+import {
+    widthPercentageToDP as wp,
+    heightPercentageToDP as hp
+} from 'react-native-responsive-screen'
 import {Entypo} from '@expo/vector-icons'
 import theme from '../theme.js'
+import { allowMultiStyle } from '../functionsFronted.js'
 
-const props = {
-    initSecure,
-    placeholder,
-    handlerChangeText: () => null
-}
-
-const Passwordfield = (props) => {
+const Passwordfield = (
+    {
+        initSecure,
+        handlerChangeText,
+        value,
+        placeholder,
+        containerStyle,
+        contentStyle
+    }
+) => {
     //----------------------------- Hooks -----------------------------
-    const [secure, setSecure] = useState(props.initSecure)
+    const [secure, setSecure] = useState(initSecure)
+    const [eyeIcon, setEyeIcon] = useState('eye')
     //----------------------------- end Hooks -------------------------
-    let typeEye = "eye";
     const handlerEye = () => {
         setSecure(!secure)
-        typeEye = !secure ? "eye-with-line":typeEye
+        setEyeIcon(secure ? 'eye':'eye-with-line')
     }
     
+    const fnContainerStyle = allowMultiStyle(style.container, containerStyle)
+    const fnContentStyle = allowMultiStyle(style.textInput, contentStyle)
     return (
-    <View style={style.container}>
+    <View style={fnContainerStyle}>
         <TextInput
-        handlerChangeText={props.handlerChangeText}
+        handlerChangeText={handlerChangeText}
         secureTextEntry={secure}
-        placeholder={props.placeholder}
-        style={style.textInput}>
+        placeholder={placeholder}
+        placeholderTextColor="#555555"
+        value={value}
+        style={fnContentStyle}>
         </TextInput>
         <Pressable        
         onPress={handlerEye}
         style={style.eye}>
             <Entypo 
-            name={typeEye} 
+            name={eyeIcon} 
             size={24} 
             color={theme.colors.secondary}>
             </Entypo>
@@ -47,13 +59,6 @@ const style = StyleSheet.create({
     },
     textInput:{
         flex:1,
-        marginTop:20,
-        marginLeft:theme.margins.fieldsL,
-        marginRight:theme.margins.fieldsR,
-        paddingLeft:theme.paddings.fields,
-        paddingRight:theme.paddings.fields,
-        paddingTop:theme.paddings.fieldsVertical,
-        paddingBottom:theme.paddings.fieldsVertical,
         fontSize:theme.fontSizes.body,
         color:theme.colors.textPrimary,
         borderColor:theme.colors.secondary,
@@ -64,8 +69,8 @@ const style = StyleSheet.create({
     },
     eye:{
         position:'absolute',
-        top:25,
-        left:308,
+        top:hp(1.5),
+        left:wp(50),
         zIndex:5
     }
 })
