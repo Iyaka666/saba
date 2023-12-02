@@ -79,7 +79,7 @@ const Login = ({navigation}) => {
     //     }
     // }
     //---------------------------- End handlers ------------------------------
-    const dataTrial = function (){
+    const dataTrial = function (code, password){
         setRememberMe((prevRememberMe) => {
             const newRememberMe = !prevRememberMe;
             setUser(newRememberMe ? userTrial.code : '');
@@ -89,11 +89,9 @@ const Login = ({navigation}) => {
     }
 
     const handlerLogin = () => {
-        if( 
-            verifyPassword(password, setPassword) &&
+        if( verifyPassword(password, setPassword) &&
             verifyCode(user, setUser) &&
-            validFieldEmpty(password, user)
-            )
+            validFieldEmpty(password, user) )
         {
             navigation.navigate('Home')
         }
@@ -115,15 +113,17 @@ const Login = ({navigation}) => {
                 <Textfield 
                 placeholder='Código'
                 value={user}
-                containerStyle={textfield.textfields}
-                contentStyle={textfield.contentTextField}/>
+                onChangeText={(text) => setUser(text)}
+                containerStyle={textfield.style}
+                contentStyle={textfield.content}/>
                 
                 <Passwordfield 
                 placeholder='Contraseña'
                 value={password}
+                onChangeText={ (text) => setPassword(text) }
                 initSecure
-                containerStyle={textfield.textfields}
-                contentStyle={textfield.contentTextField}
+                containerStyle={textfield.style}
+                contentStyle={textfield.content}
                 />
                 
                 <CheckBox 
@@ -132,7 +132,7 @@ const Login = ({navigation}) => {
                 checkedColor={COLOR_SECONDARY}
                 center 
                 containerStyle={style.checkBox}
-                onPress={ dataTrial }/>
+                onPress={ () => dataTrial(user, password)} />
                 
                 <ButtonText
                 text='Iniciar sesion'
