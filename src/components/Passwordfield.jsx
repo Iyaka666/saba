@@ -11,7 +11,7 @@ import { allowMultiStyle } from '../functionsFronted.js'
 const Passwordfield = (
     {
         initSecure,
-        handlerChangeText,
+        onChangeText,
         value,
         placeholder,
         containerStyle,
@@ -32,7 +32,7 @@ const Passwordfield = (
     return (
     <View style={fnContainerStyle}>
         <TextInput
-        handlerChangeText={handlerChangeText}
+        onChangeText={onChangeText}
         secureTextEntry={secure}
         placeholder={placeholder}
         placeholderTextColor="#555555"
