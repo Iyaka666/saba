@@ -37,7 +37,8 @@ const Register = ({navigation}) => {
     <View style={style.container}>
         <View style={style.header}>
             <Header 
-            screen='noLogin'/>
+            screen='logout'
+            navigation={navigation}/>
         </View>
 
         <View style={style.form}>
@@ -45,40 +46,40 @@ const Register = ({navigation}) => {
             placeholder='Nombres' 
             autoCapitalize='words' 
             value={inputName}
-            containerStyle={textfield.textfields}
-            contentStyle={textfield.contentTextField}
+            containerStyle={textfield.style}
+            contentStyle={textfield.content}
             handlerChangeText={() => verifyInputName(inputName, setInputName)}/>
             <TextField 
             placeholder='Apellidos' 
             autoCapitalize='words'
             value={inputlastName} 
-            containerStyle={textfield.textfields}
-            contentStyle={textfield.contentTextField}
+            containerStyle={textfield.style}
+            contentStyle={textfield.content}
             handlerChangeText={() => verifyInputLastname(inputlastName, setInputLastname)}/>
             <TextField 
             placeholder='Código de estudiante'
             value={inputCode} 
-            containerStyle={textfield.textfields}
-            contentStyle={textfield.contentTextField}
+            containerStyle={textfield.style}
+            contentStyle={textfield.content}
             handlerChangeText={() => verifyInputCode(inputCode, setInputCode)}/>
             <TextField 
             placeholder='correo electrónico'
             value={inputEmail}
-            containerStyle={textfield.textfields}
-            contentStyle={textfield.contentTextField} 
+            containerStyle={textfield.style}
+            contentStyle={textfield.content} 
             handlerChangeText={() => verifyInputEmail(inputEmail, setInputEmail)}/>
             <PasswordField 
             placeholder='contraseña' 
             initSecure
-            containerStyle={textfield.textfields}
-            contentStyle={textfield.contentTextField}
+            containerStyle={textfield.style}
+            contentStyle={textfield.content}
             handlerChangeText={() => verifyInputPassword(inputPassword, setInputPassword)}
             />
             <PasswordField 
             placeholder='confirmar contraseña' 
             initSecure
-            containerStyle={textfield.textfields}
-            contentStyle={textfield.contentTextField}
+            containerStyle={textfield.style}
+            contentStyle={textfield.content}
             handlerChangeText={() => validEqualPassword(inputPassword, inputConfirPassword)}
             />
             <ButtonText
