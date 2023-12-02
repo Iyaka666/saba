@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, StyleSheet} from 'react-native'
+import { View, Text, StyleSheet, Pressable} from 'react-native'
 import {
     heightPercentageToDP as hp,
     widthPercentageToDP as wp
@@ -10,23 +10,31 @@ import theme from '../theme.js'
 const Header = ({
     screen,
     logoWitdh,
-    logoHeight
+    logoHeight,
+    navigation
 }) => {
     if( screen === 'login' ){
-        return(
-            <View>
-                <Logo width={logoWitdh} height={logoHeight}/>
-            </View>
-        )
+        return <Logo width={logoWitdh} height={logoHeight}/>
     }
-    
-    if(screen === 'noLogin'){
+
+    if(screen === 'logout'){
         return  (
         <View style={styleNoLogin.container}>
-            <View>
-                <Logo width={wp(20)} height={hp(10)}/>
+            <Logo width={wp(20)} height={hp(10)}/>
+            <View style={styleNoLogin.textContainer}>
+                    <Text style={styleNoLogin.text}>SABA</Text>
             </View>
-
+        </View>
+    )}
+    
+    if(screen === 'logedIn'){
+        return  (
+        <View style={styleNoLogin.container}>
+            <Pressable            
+            onPress={() => navigation.navigate('Home')}
+            >
+                <Logo width={wp(20)} height={hp(10)}/>
+            </Pressable>
             <View style={styleNoLogin.textContainer}>
                     <Text style={styleNoLogin.text}>SABA</Text>
             </View>
