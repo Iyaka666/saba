@@ -11,7 +11,7 @@ const TextField = (
         keyboardType = 'default',
         containerStyle,
         contentStyle,
-        handlerChangeText
+        onChangeText
     }
 ) => {
     const fnContainerStyle = allowMultiStyle(containerStyle)
@@ -28,7 +28,7 @@ const TextField = (
         inputMode={inputMode}
         keyboardType={keyboardType}
         value={value}
-        onChangeText={handlerChangeText}
+        onChangeText={onChangeText}
         ></TextInput>
     </View>
     )
