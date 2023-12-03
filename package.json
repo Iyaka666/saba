@@ -9,6 +9,14 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@babel/plugin-transform-async-generator-functions": "^7.23.4",
+    "@babel/plugin-transform-class-properties": "^7.23.3",
+    "@babel/plugin-transform-export-namespace-from": "^7.23.4",
+    "@babel/plugin-transform-nullish-coalescing-operator": "^7.23.4",
+    "@babel/plugin-transform-numeric-separator": "^7.23.4",
+    "@babel/plugin-transform-object-rest-spread": "^7.23.4",
+    "@babel/plugin-transform-optional-catch-binding": "^7.23.4",
+    "@babel/plugin-transform-optional-chaining": "^7.23.4",
     "@expo/vector-icons": "^13.0.0",
     "@expo/webpack-config": "^19.0.0",
     "@react-native-masked-view/masked-view": "0.2.9",
@@ -32,7 +40,8 @@
     "react-native-screens": "~3.22.0",
     "react-native-svg": "13.9.0",
     "react-native-svg-transformer": "^1.1.0",
-    "react-native-web": "~0.19.6"
+    "react-native-web": "~0.19.6",
+    "uuid": "^7.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
