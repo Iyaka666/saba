@@ -19,14 +19,19 @@ Salida:
 */
 
 //--------------- importacion de frameworks ----------
-import React from 'react'
+import React, { useState } from 'react'
 import { View, Text, StyleSheet, Pressable} from 'react-native'
 import {
     heightPercentageToDP as hp,
     widthPercentageToDP as wp
 } from 'react-native-responsive-screen'
 import Constants from 'expo-constants'
+import {Entypo, Ionicons} from '@expo/vector-icons'
 //--------------- importacion de frameworks fin ----------
+
+//--------------- importacion componentes externos ----------
+import { Dialog, Divider } from '@rneui/themed'
+//--------------- importacion componentes externos fin ----------
 
 //--------------- otras importaciones ----------
 import Logo from './../../assets/svgLogo.svg'
@@ -34,53 +39,79 @@ import theme from '../theme.js'
 
 const Header = ({
     screen,
-    logoWitdh,
-    logoHeight,
-    navigation
+    logoWitdh = undefined,
+    logoHeight = undefined,
+    navigation = null,
+    nameUser = null,
+    roll = null
 }) => {
+    const [visibleDialog, setVisibleDialog] = useState(false)
+
+    const toggleDialog = () => setVisibleDialog(!visibleDialog)
+
     if( screen === 'login' ){
         return (
-        <View style={style.container}>
-            <Logo width={logoWitdh} height={logoHeight}/>
+        <View style={style.bar}>
+            <Logo 
+            width={logoWitdh} 
+            height={logoHeight}/>
         </View>
         )
     }
 
     if(screen === 'logout'){
         return  (
-        <View style={[styleNoLogin.container, style.container]}>
-            <Logo width={wp(20)} height={hp(10)}/>
-            <View style={styleNoLogin.textContainer}>
-                    <Text style={styleNoLogin.text}>SABA</Text>
+        <View style={[style.container, style.bar]}>
+            <Logo 
+            width={wp(20)} 
+            height={hp(10)}/>
+            <View style={style.textContainer}>
+                    <Text style={style.text}>SABA</Text>
             </View>
         </View>
     )}
     
     if(screen === 'logedIn'){
         return  (
-        <View style={[styleNoLogin.container, style.container]}>
+        <View style={[style.container, style.bar]}>
             <Pressable            
             onPress={() => navigation.navigate('Home')}
             >
                 <Logo width={wp(20)} height={hp(10)}/>
             </Pressable>
-            <View style={styleNoLogin.textContainer}>
-                    <Text style={styleNoLogin.text}>SABA</Text>
-            </View>
+            <Pressable
+            onPress={toggleDialog}
+            >
+                <Ionicons name="person-circle" size={50} color='red' />
+            </Pressable>
+
+            <Dialog
+                isVisible={visibleDialog}
+                onBackdropPress={toggleDialog}
+            >
+                <Ionicons name="person-circle" size={50*4} color='red' />
+                <Text>{nameUser}</Text>
+                <View>
+                    <Text>{roll}</Text>
+                </View>
+                <Divider width={2} color="#000"/>
+                <Pressable
+                onPress={() => navigation.navigate('Login')}
+                >
+                    <Entypo/>
+                    <Text>Cerrar sesion</Text>
+                </Pressable>
+            </Dialog>
         </View>
-    )
+    )} 
     throw new Error("La propiedad 'screen' debe ser establecida")
-} 
 }
 
 const style = StyleSheet.create({
-    container:{
-        marginTop: Constants.statusBarHeight + hp(5),
+    bar:{
+        marginTop: Constants.statusBarHeight,
         alignItems: 'center'
-    }
-})
-
-const styleNoLogin = StyleSheet.create({
+    },
     container:{
         flexDirection: 'row'
     },
