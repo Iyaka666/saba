@@ -21,7 +21,6 @@ import {
     Text, 
     View 
 } from 'react-native'
-import Constants from 'expo-constants'
 import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp
@@ -76,6 +75,8 @@ const Login = ({navigation}) => {
         password: la clave correspondiente al usuario
     Salida: Modificación del estado rememberMe
     */
+    const WP_LOGO_LOGIN = 40
+
     const dataTrial = function (code, password){
         setRememberMe((prevRememberMe) => {
             const newRememberMe = !prevRememberMe;
@@ -100,8 +101,8 @@ const Login = ({navigation}) => {
             <View style={style.header}>
                 <Header 
                 screen='login' 
-                logoWitdh={240*1.4} 
-                logoHeight={200*1.4}/>
+                logoWitdh={wp(WP_LOGO_LOGIN)} 
+                logoHeight={hp(WP_LOGO_LOGIN*1.2)}/>
             </View>
 
             <View style={style.content}>
@@ -175,13 +176,14 @@ const style = StyleSheet.create({
         width: wp(100),
     },
     header:{
-        flex:3        
+        flex:4        
     },
     content:{
-        flex:5
+        flex:5,
+        paddingBottom: hp(12)
     },
     footer:{
-        flex:2
+        flex:1
     },
     title:{
         fontSize: hp(1.7),
