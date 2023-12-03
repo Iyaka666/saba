@@ -61,9 +61,7 @@ const style = StyleSheet.create({
         width: wp(100)
     },
     header:{
-        flex:2,
-        alignItems: 'center',
-        marginTop: Constants.statusBarHeight + hp(5)
+        flex:2
     },
     content:{
         flex:7,

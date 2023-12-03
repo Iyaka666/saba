@@ -1,16 +1,41 @@
+/*Aquí se crea la screen Register
+Estructura básica 
+    - Logo Mediano 
+    - Titulo
+    - Campo de texto para nombres
+    - Campo de texto para apellidos
+    - Campo de texto para codigo
+    - Campo de texto para correo electrónico
+    - Campo de texto para contraseña
+    - Campo de texto para confirmación de contraseña
+    - Boton Registar
+    - Enlace a screen Login
+    - Información acerca de nosotros
+
+Entrada:
+    navigation: objeto navigation que permite las diferentes navegaciones establecidas
+Salida: Screen
+*/
+
+//--------------- importacion de frameworks ----------
 import React, {useState} from 'react'
 import { Alert,View,Text, StyleSheet} from 'react-native'
 import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp
 } from 'react-native-responsive-screen'
-import Constants from 'expo-constants'
+//--------------- importacion de frameworks fin ----------
+
+//--------------- importacion Componentes ----------
 import TextField from '../components/Textfield.jsx'
 import PasswordField from '../components/Passwordfield.jsx'
 import ButtonText from '../components/ButtonText.jsx'
 import Header from '../components/Header.jsx'
 import Footer from '../components/Footer.jsx'
 import Browser from '../components/Browser.jsx'
+//--------------- importacion Componentes fin ----------
+
+//--------------- otras importaciones ----------
 import {
     verifyInputName, 
     verifyInputLastname, 
@@ -32,7 +57,7 @@ const Register = ({navigation}) => {
     const {inputEmail, setInputEmail} = useState()
     const {inputPassword, setInputPassword} = useState()
     const {inputConfirPassword, setInputConfirPassword} = useState()
-    //----------------------------  End hooks ----------------------------
+    //----------------------------  Hooks fin----------------------------
     return(
     <View style={style.container}>
         <View style={style.header}>
@@ -121,9 +146,7 @@ const style = StyleSheet.create({
         gap: hp(5)
     },
     header:{
-        flex: 1,
-        marginTop: Constants.statusBarHeight + hp(5),
-        alignItems: 'center'
+        flex: 1
     },
     content:{
         flex:7
