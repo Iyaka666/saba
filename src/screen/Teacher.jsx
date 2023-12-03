@@ -1,5 +1,5 @@
-import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { View, Text, StyleSheet, Pressable } from 'react-native'
 import Header from '../components/HeaderWithUser.jsx'
 import Table from '../components/Table-Scroll.jsx'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen'
@@ -8,10 +8,25 @@ import ButtonText from '../components/ButtonText.jsx'
 import Constants from 'expo-constants'
 import theme from './../theme.js'
 import { button } from '../styles/button.js'
+import { SimpleLineIcons } from '@expo/vector-icons';
+import { textfield } from '../styles/textField.js'
+
 
 
 
 const Teacher = ({ navigation }) => {
+    const [currentDate, setDate] = useState('');
+
+    useEffect(() => {
+        var date = new Date().toLocaleDateString('default',{ year:'numeric', month:'long', weekday:'long',});
+       // var month = new Date().toLocaleDateString('default', {month : 'long'});
+        //var year = new Date().getFullYear();
+
+        setDate(
+            date 
+        );
+    });
+
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -19,19 +34,23 @@ const Teacher = ({ navigation }) => {
                     navigation={navigation} />
             </View>
 
-            <View style ={styles.content}>
+            <View style={styles.content}>
+
                 <View style={styles.title}>
-                    <Text>Poner fechaaaaaaaa</Text>
+                    <Text> {currentDate} </Text>
                 </View>
 
-                <Textfield  />
+                <Textfield containerStyle={styles.textfieldSearch} contentStyle={{textAlign:'center'}} />
+                <Pressable  style={styles.magnifier}>
+                    <SimpleLineIcons name="magnifier" size={20} color="#e40613" />
+                </Pressable>
                 <Table />
 
             </View>
-            
+
             <View style={styles.footer}>
-                <ButtonText text='                CSV                ' containerStyle = {button.style} contentStyle={[button.text, styles.textCenter]}/>
-                <ButtonText text='Ordenamiento aleatorio' containerStyle = {button.style} contentStyle={[button.text, styles.textCenter]} />
+                <ButtonText text='                CSV                ' containerStyle={button.style} contentStyle={[button.text, styles.textCenter]} />
+                <ButtonText text='Ordenamiento aleatorio' containerStyle={button.style} contentStyle={[button.text, styles.textCenter]} />
             </View>
 
         </View>
@@ -39,11 +58,11 @@ const Teacher = ({ navigation }) => {
 }
 
 const styles = StyleSheet.create({
-    container:{
-        justifyContent:'space-between',
-        backgroundColor:theme.colors.primary,
+    container: {
+        justifyContent: 'space-between',
+        backgroundColor: theme.colors.primary,
         position: 'relative',
-        height:hp(100),
+        height: hp(100),
         width: wp(100),
     },
     header: {
@@ -64,11 +83,22 @@ const styles = StyleSheet.create({
         marginLeft: 'auto',
         marginRight: 'auto'
     },
-    textCenter:{
-        textAlign:'center'
+    textCenter: {
+        textAlign: 'center'
     },
-  
-  
+    textfieldSearch: {
+        position: 'relative',
+
+    },
+    magnifier: {
+        position: 'absolute',
+        top: hp(7.5),
+        left: wp(5),
+        zIndex: 5
+    }
+
+
+
 
 })
 
