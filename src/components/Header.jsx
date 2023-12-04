@@ -114,8 +114,8 @@ const Header = ({
 const style = StyleSheet.create({
     container:{
         flexDirection: 'row',
-        marginTop: Constants.statusBarHeight,
-        alignItems: 'center'
+        marginTop: Constants.statusBarHeight + hp(5),
+        justifyContent: 'center',
     },
     text:{
         fontSize: hp(4),
@@ -127,6 +127,11 @@ const style = StyleSheet.create({
     },
     textContainer:{
         alignSelf:'center'
+    },
+    bar:{
+        flexDirection: 'column',
+        marginTop: Constants.statusBarHeight,
+        alignItems: 'center'
     }
 })
 
