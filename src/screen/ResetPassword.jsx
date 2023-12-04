@@ -22,13 +22,13 @@ const ResetPassword = ({navigation}) => {
             </View>
 
             <View style={style.content}>
-            <Text>Ingrese una nueva contraseña</Text>
+            <Text style={style.textCenter}>Ingrese una nueva contraseña</Text>
             <PasswordField
             initSecure
             placeholder = {conditionsPassword}
             contentStyle={[textfield.content, textfield.style]}
             />
-            <Text>Confirma contraseña</Text>
+            <Text style={style.textCenter}>Confirma contraseña</Text>
             <PasswordField
             initSecure
             placeholder = {conditionsPassword}
@@ -63,5 +63,8 @@ const style = StyleSheet.create({
     },
     footer:{
         flex:1
+    },
+    textCenter:{
+        textAlign: 'center'
     }
 })
