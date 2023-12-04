@@ -33,7 +33,3 @@ yarn-error.*
 
 # typescript
 *.tsbuildinfo
-
-# Pruebas
-src/components/Main.jsx
-package-lock.json
