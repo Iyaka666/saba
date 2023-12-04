@@ -19,7 +19,11 @@ Salida: Screen
 
 //--------------- importacion de frameworks ----------
 import React, {useState} from 'react'
-import { Alert,View,Text, StyleSheet} from 'react-native'
+import { 
+    Alert,
+    View,
+    StyleSheet
+} from 'react-native'
 import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp
@@ -66,46 +70,46 @@ const Register = ({navigation}) => {
             navigation={navigation}/>
         </View>
 
-        <View style={style.form}>
+        <View style={style.content}>
             <TextField 
             placeholder='Nombres' 
             autoCapitalize='words' 
             value={inputName}
             containerStyle={textfield.style}
             contentStyle={textfield.content}
-            handlerChangeText={() => verifyInputName(inputName, setInputName)}/>
+            onChangeText={() => verifyInputName(inputName, setInputName)}/>
             <TextField 
             placeholder='Apellidos' 
             autoCapitalize='words'
             value={inputlastName} 
             containerStyle={textfield.style}
             contentStyle={textfield.content}
-            handlerChangeText={() => verifyInputLastname(inputlastName, setInputLastname)}/>
+            onChangeText={() => verifyInputLastname(inputlastName, setInputLastname)}/>
             <TextField 
             placeholder='Código de estudiante'
             value={inputCode} 
             containerStyle={textfield.style}
             contentStyle={textfield.content}
-            handlerChangeText={() => verifyInputCode(inputCode, setInputCode)}/>
+            onChangeText={() => verifyInputCode(inputCode, setInputCode)}/>
             <TextField 
             placeholder='correo electrónico'
             value={inputEmail}
             containerStyle={textfield.style}
             contentStyle={textfield.content} 
-            handlerChangeText={() => verifyInputEmail(inputEmail, setInputEmail)}/>
+            onChangeText={() => verifyInputEmail(inputEmail, setInputEmail)}/>
             <PasswordField 
             placeholder='contraseña' 
             initSecure
             containerStyle={textfield.style}
             contentStyle={textfield.content}
-            handlerChangeText={() => verifyInputPassword(inputPassword, setInputPassword)}
+            onChangeText={() => verifyInputPassword(inputPassword, setInputPassword)}
             />
             <PasswordField 
             placeholder='confirmar contraseña' 
             initSecure
             containerStyle={textfield.style}
             contentStyle={textfield.content}
-            handlerChangeText={() => validEqualPassword(inputPassword, inputConfirPassword)}
+            onChangeText={() => validEqualPassword(inputPassword, inputConfirPassword)}
             />
             <ButtonText
             text='Registrar'
