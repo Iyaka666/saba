@@ -13,7 +13,11 @@ Entradas:
     screen: valor obligatorio, define cual de los diferentes headers es seleccionado
     logoWidth: el ancho del logo
     logoHeight: el alto del logo
-    navigation: se debe pasar sí el valor de screen es logedIn
+    
+    Para valor de screen logedIn
+    navigation: para permitirle al header la posibilidad de navegar entre las screens
+    nameuser: nombre del usuario determinado en el minimenu
+    roll: cargo designado por el aplicativo para restringir ciertas funcionalidades
 Salida:
     El componente Header determinado
 */
@@ -61,7 +65,7 @@ const Header = ({
 
     if(screen === 'logout'){
         return  (
-        <View style={[style.container, style.bar]}>
+        <View style={style.container}>
             <Logo 
             width={wp(20)} 
             height={hp(10)}/>
@@ -108,12 +112,10 @@ const Header = ({
 }
 
 const style = StyleSheet.create({
-    bar:{
+    container:{
+        flexDirection: 'row',
         marginTop: Constants.statusBarHeight,
         alignItems: 'center'
-    },
-    container:{
-        flexDirection: 'row'
     },
     text:{
         fontSize: hp(4),
