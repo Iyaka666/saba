@@ -23,10 +23,10 @@ const ForgotPassword = ({navigation}) => {
             />
             </View>
 
-        <View style={style.content}>
-            
-            <Text style={style.text}>Ingresa tu dirección de correo electrónico</Text>
-
+        <View style={[style.content, style.placeholder]}>
+            <View>
+                <Text style={style.text}>Ingresa tu dirección de correo electrónico</Text>
+            </View>
             <TextField
             placeholder='example@gmail.com'
             containerStyle={[textfield.style, style.elements]}
@@ -43,6 +43,7 @@ const ForgotPassword = ({navigation}) => {
             text='Enviar'
             containerStyle={[button.style, style.elements]}
             contentStyle={button.text}
+            onPress={() => navigation.navigate('Verification')}
             />
         </View>
 
@@ -76,7 +77,12 @@ const style = StyleSheet.create({
         marginBottom: hp(5)
     },
     text:{
-        fontSize:hp(2.3)
+        fontSize:hp(2.3),
+        textAlign: 'center'
+    },
+    placeholder:{
+        marginRight: wp(10),
+        marginLeft: wp(10)
     }
 })
 
