@@ -147,16 +147,17 @@ const style = StyleSheet.create({
     container:{
         height: hp(100),
         witdth: wp(100),
-        gap: hp(5)
+        gap: hp(2)
     },
     header:{
         flex: 1
     },
     content:{
-        flex:7
+        flex:8,
+        paddingTop: hp(8)
     },
     footer:{
-        flex:2
+        flex:1
     },
     textCenter:{
         textAlign:'center'
