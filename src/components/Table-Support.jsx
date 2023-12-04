@@ -2,14 +2,9 @@ import React from 'react'
 import { StyleSheet, View, ScrollView } from 'react-native'
 import { Table, Row } from 'react-native-table-component'
 const tableDataSample = {
-    tableHead: [ 'Materia', 'Docente', 'Horario', 'Aula'],
-    widthArr: [160, 160, 160, 120 ],
-    tableData: [['Ecologia', 'Alan Giraldo Lopez', '10:00-13:00', '301'],
-    ['Microbiologia', 'Neyla Benitez Campo', '8:00-12:00', '309'],
-    ['Bioinformatica', 'Andres Orlando Castillo Giraldo', '8:00-12:00', '215'],
-    ['Metodologias de autoformacion', 'Monica Ortiz Palacion', '18:30-21:30', '302'],
-    ['Introduccion a la investigacion', 'Calos Augusto Osorio Marulanda', '14:00-16:00', '212'],
-    ]
+    tableHead: [ 'Aula', 'Inconveniente', 'Estado'],
+    widthArr: [160, 160, 160 ],
+    tableData: []
 };
 
 const Main = () => {
