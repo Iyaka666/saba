@@ -11,7 +11,7 @@ import { allowMultiStyle } from '../functionsFronted.js'
 const Passwordfield = (
     {
         initSecure,
-        handlerChangeText,
+        onChangeText,
         value,
         placeholder,
         containerStyle,
@@ -32,13 +32,12 @@ const Passwordfield = (
     return (
     <View style={fnContainerStyle}>
         <TextInput
-        handlerChangeText={handlerChangeText}
+        onChangeText={onChangeText}
         secureTextEntry={secure}
         placeholder={placeholder}
         placeholderTextColor="#555555"
         value={value}
-        style={fnContentStyle}>
-        </TextInput>
+        style={fnContentStyle}/>
         <Pressable        
         onPress={handlerEye}
         style={style.eye}>
@@ -64,7 +63,7 @@ const style = StyleSheet.create({
         borderColor:theme.colors.secondary,
         borderWidth: 1,
         borderRadius: 8,
-        fontWeight:theme.fontWeight.thin,
+        fontWeight: theme.fontWeight.thin,
         position:'relative'
     },
     eye:{

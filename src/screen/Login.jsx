@@ -1,23 +1,46 @@
+/*Aquí se crea la screen Login
+Estructura básica 
+    - Logo
+    - Titulo
+    - Campo de texto para Codigo
+    - Campo de texto para contraseña
+    - Checkbox de recordarme
+    - Boton iniciar sesion
+    - Enlace a screen Register
+    - Enlace a screen ForgotPassword
+    - Información acerca de nosotros
+
+Entrada:
+    navigation: objeto navigation que permite las diferentes navegaciones establecidas
+Salida: Screen
+*/
+//--------------- importacion de frameworks ----------
 import React,{useState} from 'react'
 import {
     StyleSheet, 
     Text, 
     View 
 } from 'react-native'
-import Constants from 'expo-constants'
-
 import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp
 } from 'react-native-responsive-screen'
+//--------------- importacion de frameworks fin ----------
+
+//--------------- importacion componentes externos ----------
 import { CheckBox } from '@rneui/themed'
+//--------------- importacion componentes externos fin ----------
+
+//--------------- importacion Componentes ----------
 import Passwordfield from './../components/Passwordfield.jsx'
 import Header from '../components/Header.jsx'
 import Footer from '../components/Footer.jsx'
 import Textfield from '../components/Textfield.jsx'
 import ButtonText from '../components/ButtonText.jsx'
 import Browser from '../components/Browser.jsx'
-import theme from '../theme.js'
+//--------------- importacion Componentes ----------
+
+//--------------- otras importaciones ----------
 import {
     verifyPassword, 
     verifyCode, 
@@ -26,10 +49,13 @@ import {
 import {textfield} from '../styles/textField.js'
 import { footer } from '../styles/footer.js'
 import { button } from '../styles/button.js'
+import theme from '../theme.js'
+//--------------- otras importaciones ----------
 
 const COLOR_SECONDARY = theme.colors.secondary
 
 const Login = ({navigation}) => {
+// Información de prueba utilizada por el recordar me de la screen
     const userTrial  = {
         name:'Diego',
         lastname:'Cardenas',
@@ -41,45 +67,17 @@ const Login = ({navigation}) => {
     const [user, setUser] = useState('')
     const [password, setPassword] = useState('')
     const [rememberMe, setRememberMe] = useState(false)
+    //----------------------------  Hooks fin ----------------------------
 
-    // useEffect(() => {
-    //     handlerLoadCredentialsStoraged();
-    // },[])
-    
-    //----------------------------  End hooks ----------------------------
-    //---------------------------- Handlers ------------------------------
-    // const handlerRememberMe = () => {
-    //     setRememberMe(!rememberMe)
-    // }
-    // const handlerLoadCredentialsStoraged = async () => {
-    //     try {
-    //         const credentials = await AsyncStorage.getItem('credentials')
-    //         if (credentials){
-    //             const {userName, password} = JSON.parse(credentials)
-    //             setUser(userName)
-    //             setPassword(password)
-    //             setRememberMe(true)
-    //         } 
-    //     } catch (error) {
-    //         console.error(error)
-    //     }
-    // }
+    /*dataTrial Creada para manejar los datos de prueba
+    Entradas:
+        code: el código preestablecido para que el usuario inicie sesion
+        password: la clave correspondiente al usuario
+    Salida: Modificación del estado rememberMe
+    */
+    const WP_LOGO_LOGIN = 40
 
-    // const saveCredentials = async () => {
-    //     try {            
-    //         if (rememberMe){
-    //             const credentials = JSON.stringify({userName,password})
-    //             await AsyncStorage.setItem('credentials', credentials)
-    //             await Keychain.setGenericPassword(userName, password)
-    //         }else{
-    //             return
-    //         }
-    //     } catch (error) {
-    //         console.error(error)
-    //     }
-    // }
-    //---------------------------- End handlers ------------------------------
-    const dataTrial = function (){
+    const dataTrial = function (code, password){
         setRememberMe((prevRememberMe) => {
             const newRememberMe = !prevRememberMe;
             setUser(newRememberMe ? userTrial.code : '');
@@ -88,23 +86,23 @@ const Login = ({navigation}) => {
         });
     }
 
+    //Manejador que controla la validación de valores válidos
     const handlerLogin = () => {
-        if( 
-            verifyPassword(password, setPassword) &&
+        if( verifyPassword(password, setPassword) &&
             verifyCode(user, setUser) &&
-            validFieldEmpty(password, user)
-            )
+            validFieldEmpty(password, user) )
         {
             navigation.navigate('Home')
         }
     }
+
     return (
         <View style={style.container}>
             <View style={style.header}>
                 <Header 
                 screen='login' 
-                logoWitdh={240*1.4} 
-                logoHeight={200*1.4}/>
+                logoWitdh={wp(WP_LOGO_LOGIN)} 
+                logoHeight={hp(WP_LOGO_LOGIN*1.2)}/>
             </View>
 
             <View style={style.content}>
@@ -115,15 +113,17 @@ const Login = ({navigation}) => {
                 <Textfield 
                 placeholder='Código'
                 value={user}
-                containerStyle={textfield.textfields}
-                contentStyle={textfield.contentTextField}/>
+                onChangeText={(text) => setUser(text)}
+                containerStyle={textfield.style}
+                contentStyle={textfield.content}/>
                 
                 <Passwordfield 
                 placeholder='Contraseña'
                 value={password}
+                onChangeText={ (text) => setPassword(text) }
                 initSecure
-                containerStyle={textfield.textfields}
-                contentStyle={textfield.contentTextField}
+                containerStyle={textfield.style}
+                contentStyle={textfield.content}
                 />
                 
                 <CheckBox 
@@ -132,7 +132,7 @@ const Login = ({navigation}) => {
                 checkedColor={COLOR_SECONDARY}
                 center 
                 containerStyle={style.checkBox}
-                onPress={ dataTrial }/>
+                onPress={ () => dataTrial(user, password)} />
                 
                 <ButtonText
                 text='Iniciar sesion'
@@ -176,15 +176,14 @@ const style = StyleSheet.create({
         width: wp(100),
     },
     header:{
-        flex:3,
-        marginTop: Constants.statusBarHeight + hp(5),
-        alignItems: 'center'
+        flex:4        
     },
     content:{
-        flex:5
+        flex:5,
+        paddingBottom: hp(12)
     },
     footer:{
-        flex:2
+        flex:1
     },
     title:{
         fontSize: hp(1.7),
