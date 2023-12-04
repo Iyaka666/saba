@@ -1,20 +1,24 @@
 import React from 'react'
 import { View, Text, Pressable, StyleSheet, Dimensions } from 'react-native'
+import constants from 'expo-constants'
 import Header from './../components/HeaderWithUser.jsx'
 import Footer from './../components/Footer.jsx'
 import Mapa from './../../assets/svgMapa.svg'
 import PortaPapeles from './../../assets/svgPortaPapeles.svg'
+import Salon from './../../assets/svgSalon.svg'
 import theme from './../theme.js'
 
 const { height, width } = Dimensions.get('window')
 
-const COLOR_SECONDARY = theme.colors.secondary
-
 const Home = () => {
     //----------------------------  Hooks ----------------------------
-    //const [] = useState('')
-    //const [] = useState('')
-    //----------------------------  End hooks ----------------------------
+    //----------------------------  End hooks ------------------------
+
+    const ImageOpcion1 = Salon;
+    const ImageOpcion2 = Mapa;
+    const TextOpcion1 = 'Horario';
+    const TextOpcion2 = 'Mapa';
+
     return (
         <View style={style.container}>
             <View style={style.header}>
@@ -23,27 +27,27 @@ const Home = () => {
 
             <View style={style.content}>
 
-                <View style={style.image}>
-                    <PortaPapeles width={750} height={150} />
+                <View style={style.imageContainer}>
+                    <ImageOpcion1 width={225} height={150} />
                     <Pressable style={style.button}>
                         <Text
                             style={[style.textButton, style.textCenter]}
-                        >Asignación</Text>
+                        >{TextOpcion1}</Text>
                     </Pressable>
                 </View>
 
-                <View style={style.image}>
-                    <Mapa width={750} height={150} />
+                <View style={style.imageContainer}>
+                    <ImageOpcion2 width={225} height={150} />
                     <Pressable style={style.button}>
                         <Text
                             style={[style.textButton, style.textCenter]}
-                        >Mapa</Text>
+                        >{TextOpcion2}</Text>
                     </Pressable>
                 </View>
             </View>
 
-            <View style={style.footer}>
-                <Footer></Footer>
+            <View>
+                <Footer noPqrs></Footer>
             </View>
         </View>
     )
@@ -51,29 +55,29 @@ const Home = () => {
 
 const style = StyleSheet.create({
     container: {
-        justifyContent: 'center',
         backgroundColor: theme.colors.primary,
-        position: 'relative',
+        flex: 1,
         height: height,
-        width: width
+        width: width,
     },
     header: {
         flex: 1,
+        marginTop: constants.statusBarHeight,
+        marginLeft: 10,
         marginRight: 20
     },
     content: {
         flex: 7,
+        alignItems: 'center',
         justifyContent: 'space-evenly'
     },
-    image: {
+    imageContainer: {
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: theme.colors.primary,
-    },
-    footer: {
-        bottom: 0,
-        left: -10,
-        right: 0
+        width: 225,
+        borderRadius: 20,
+        overflow: 'hidden'
     },
     textRed: {
         color: theme.colors.secondary
