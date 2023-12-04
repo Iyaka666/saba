@@ -36,3 +36,4 @@ yarn-error.*
 
 # Pruebas
 src/components/Main.jsx
+package-lock.json
