@@ -1,32 +1,62 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, StyleSheet, Pressable } from 'react-native'
+import { View, Text, StyleSheet, Pressable, ScrollView } from 'react-native'
 import Header from '../components/HeaderWithUser.jsx'
-import Table from '../components/Table-Scroll.jsx'
+// import Table from '../components/Table-Scroll.jsx'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen'
 import Textfield from '../components/Textfield.jsx'
 import ButtonText from '../components/ButtonText.jsx'
 import Constants from 'expo-constants'
 import theme from './../theme.js'
 import { button } from '../styles/button.js'
+import { Table, Row, Rows } from 'react-native-table-component'
 import { SimpleLineIcons } from '@expo/vector-icons';
 import { textfield } from '../styles/textField.js'
 
 
+const tableDataSample = {
+    tableHead: ['Materia', 'Docente', 'Horario', 'Aula'],
+    widthArr: [160, 160, 160, 120],
+    tableData: [['Ecologia', 'Alan Giraldo Lopez', '10:00-13:00', '301'],
+    ['Microbiologia', 'Neyla Benitez Campo', '8:00-12:00', '309'],
+    ['Bioinformatica', 'Andres Orlando Castillo Giraldo', '8:00-12:00', '215'],
+    ['Metodologias de autoformacion', 'Monica Ortiz Palacion', '18:30-21:30', '302'],
+    ['Introduccion a la investigacion', 'Calos Augusto Osorio Marulanda', '14:00-16:00', '212'],
+    ]
+};
 
 
 const Teacher = ({ navigation }) => {
+    //------------Vueltas necesarias para la busqueda de asignatura-----------------------// 
+    const [data, setData] = useState(tableDataSample);
+    const [searchText, setSearchText] = useState('');
+
+    const handleSearch = (text) => {
+        setSearchText(text);
+
+        // Filtrar datos en base al texto de búsqueda
+        const filteredData = tableDataSample.tableData.filter((rowData) =>
+            rowData.some((cell) => cell.toLowerCase().includes(text.toLowerCase()))
+        );
+
+        // Actualizar los datos en el estado
+        setData({
+            ...tableDataSample,
+            tableData: filteredData,
+        });
+    };
+    //------------------------------------------------------------------------------------//
+
+    //------------Cosa que pode la fecha actual--------------------------------//
     const [currentDate, setDate] = useState('');
-
     useEffect(() => {
-        var date = new Date().toLocaleDateString('default',{ year:'numeric', month:'long', weekday:'long',});
-       // var month = new Date().toLocaleDateString('default', {month : 'long'});
-        //var year = new Date().getFullYear();
-
+        var date = new Date().toLocaleDateString('default', { year: 'numeric', month: 'long', weekday: 'long', });
         setDate(
-            date 
+            date
         );
     });
+    //--------------------------------------------------------------------------------//
 
+    //----------------------renderizacion de cosas-------------------------------//
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -35,17 +65,53 @@ const Teacher = ({ navigation }) => {
             </View>
 
             <View style={styles.content}>
-
                 <View style={styles.title}>
                     <Text> {currentDate} </Text>
                 </View>
 
-                <Textfield containerStyle={styles.textfieldSearch} contentStyle={{textAlign:'center'}} />
-                <Pressable  style={styles.magnifier}>
-                    <SimpleLineIcons name="magnifier" size={20} color="#e40613" />
-                </Pressable>
-                <Table />
+                <Textfield
+                    autoCapitalize='words'
+                    placeholder='Buscar..'
+                    containerStyle={styles.textfieldSearch}
+                    contentStyle={{ textAlign: 'center' }}
+                    value={searchText}
+                    onChangeText={handleSearch}
+                />
+                <View style={styles.containerTable}>
+                    <ScrollView horizontal={true}>
+                        <View>
+                            <Table borderStyle={{ borderWidth: 1, borderColor: 'gray', borderRadius: 10 }}>
+                                <Row
+                                    data={data.tableHead}
+                                    widthArr={data.widthArr}
+                                    style={styles.head}
+                                    textStyle={styles.headText}
+                                />
+                                {/* <Rows data={tableDataSample.tableData} textStyle={styles.text} widthArr={data.widthArr}/> */}
+                            </Table>
+                            <ScrollView>
+                                <Table borderStyle={{ borderWidth: 1, borderColor: 'gray', borderRadius: 10 }}>
 
+                                    {data.tableData.map((rowData, index) => (
+                                        <Row
+                                            key={index}
+                                            data={rowData}
+                                            widthArr={data.widthArr}
+                                            style={styles.rowSection}
+                                            textStyle={styles.text}
+                                        />
+                                    ))}
+                                </Table>
+                            </ScrollView>
+                        </View>
+                    </ScrollView>
+                </View>
+
+                {/* <Pressable style={styles.magnifier}>
+                    <SimpleLineIcons name="magnifier" size={20} color="#e40613" />
+                </Pressable> */}
+                {/* Tabla y demas */}
+                {/* <Table /> */}
             </View>
 
             <View style={styles.footer}>
@@ -58,6 +124,37 @@ const Teacher = ({ navigation }) => {
 }
 
 const styles = StyleSheet.create({
+    containerTable: {
+        flex: 1,
+        padding: 16,
+        paddingTop: 30,
+        backgroundColor: '#fff'
+    },
+
+    rowSection: {
+        height: 60,
+        backgroundColor: '#FEFCFC'
+    },
+
+    head: {
+        height: 44,
+        backgroundColor: '#E40613',
+        borderTopLeftRadius:20,
+        borderTopRightRadius:20,
+    },
+    headText: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        color: 'white'
+    },
+    text: {
+        margin: 6,
+        fontSize: 16,
+        fontWeight: 'bold',
+        textAlign: 'center'
+    },
+
     container: {
         justifyContent: 'space-between',
         backgroundColor: theme.colors.primary,
@@ -95,10 +192,7 @@ const styles = StyleSheet.create({
         top: hp(7.5),
         left: wp(5),
         zIndex: 5
-    }
-
-
-
+    },
 
 })
 
