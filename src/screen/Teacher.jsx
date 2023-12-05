@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { View, Text, StyleSheet, Pressable, ScrollView } from 'react-native'
 import Header from '../components/HeaderWithUser.jsx'
-// import Table from '../components/Table-Scroll.jsx'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen'
 import Textfield from '../components/Textfield.jsx'
 import ButtonText from '../components/ButtonText.jsx'
@@ -9,6 +8,9 @@ import Constants from 'expo-constants'
 import theme from './../theme.js'
 import { button } from '../styles/button.js'
 import { Table, Row, Rows } from 'react-native-table-component'
+import * as DocumentPicker from 'expo-document-picker';
+import * as FileSystem from 'expo-file-system';
+import Papa from 'papaparse'
 import { SimpleLineIcons } from '@expo/vector-icons';
 import { textfield } from '../styles/textField.js'
 
@@ -16,20 +18,52 @@ import { textfield } from '../styles/textField.js'
 const tableDataSample = {
     tableHead: ['Materia', 'Docente', 'Horario', 'Aula'],
     widthArr: [160, 160, 160, 120],
-    tableData: [['Ecologia', 'Alan Giraldo Lopez', '10:00-13:00', '301'],
-    ['Microbiologia', 'Neyla Benitez Campo', '8:00-12:00', '309'],
-    ['Bioinformatica', 'Andres Orlando Castillo Giraldo', '8:00-12:00', '215'],
-    ['Metodologias de autoformacion', 'Monica Ortiz Palacion', '18:30-21:30', '302'],
-    ['Introduccion a la investigacion', 'Calos Augusto Osorio Marulanda', '14:00-16:00', '212'],
+    tableData: [
     ]
 };
 
 
 const Teacher = ({ navigation }) => {
-    //------------Vueltas necesarias para la busqueda de asignatura-----------------------// 
     const [data, setData] = useState(tableDataSample);
     const [searchText, setSearchText] = useState('');
 
+    //------------------Apertura del explorador de archivos-------------------------//
+    const pickDocument = async () => {
+        try {
+          const result = await DocumentPicker.getDocumentAsync({
+            type: 'text/csv',
+          });
+    
+          if (result.type === 'success') {
+            const fileContent = await FileSystem.readAsStringAsync(result.uri);
+            parseCSV(fileContent);
+          }
+        } catch (err) {
+          console.error('Error al seleccionar el archivo', err);
+        }
+      };
+
+      const parseCSV = csvData => {
+        Papa.parse(csvData, {
+          complete: result => {
+            // result.data es un arreglo con los datos del CSV
+            const dataArray = result.data;
+    
+            // Formatear los datos para react-native-table-component
+            const headerData = dataArray[0]; // Suponemos que la primera fila es la cabecera
+            const tableData = dataArray.slice(1); // Resto de filas son datos
+    
+            setTableData({
+              headerData,
+              tableData,
+            });
+          },
+          header: true, // Si el CSV tiene encabezados
+        });
+      };
+
+
+    //------------Vueltas necesarias para la busqueda de asignatura-----------------------//
     const handleSearch = (text) => {
         setSearchText(text);
 
@@ -78,6 +112,7 @@ const Teacher = ({ navigation }) => {
                     onChangeText={handleSearch}
                 />
                 <View style={styles.containerTable}>
+                    {tableDataSample.tableData.length > 0 &&(
                     <ScrollView horizontal={true}>
                         <View>
                             <Table borderStyle={{ borderWidth: 1, borderColor: 'gray', borderRadius: 10 }}>
@@ -91,7 +126,7 @@ const Teacher = ({ navigation }) => {
                             </Table>
                             <ScrollView>
                                 <Table borderStyle={{ borderWidth: 1, borderColor: 'gray', borderRadius: 10 }}>
-
+                                
                                     {data.tableData.map((rowData, index) => (
                                         <Row
                                             key={index}
@@ -105,6 +140,7 @@ const Teacher = ({ navigation }) => {
                             </ScrollView>
                         </View>
                     </ScrollView>
+                    )}
                 </View>
 
                 {/* <Pressable style={styles.magnifier}>
@@ -115,7 +151,7 @@ const Teacher = ({ navigation }) => {
             </View>
 
             <View style={styles.footer}>
-                <ButtonText text='                CSV                ' containerStyle={button.style} contentStyle={[button.text, styles.textCenter]} />
+                <ButtonText title="Seleccionar Archivo" onPress={pickDocument} text='                CSV                ' containerStyle={button.style} contentStyle={[button.text, styles.textCenter]} />
                 <ButtonText text='Ordenamiento aleatorio' containerStyle={button.style} contentStyle={[button.text, styles.textCenter]} />
             </View>
 

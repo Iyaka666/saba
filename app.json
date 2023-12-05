@@ -15,9 +15,16 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.tuapp.bundle",
+      "infoPlist": {
+        "UIFileSharingEnabled": true
+      }
     },
     "android": {
+      "permissions": [
+        "READ_EXTERNAL_STORAGE"
+      ],
       "adaptiveIcon": {
         "foregroundImage": "",
         "backgroundColor": "#ffffff"
