@@ -5,7 +5,7 @@ export const isPasswordValid = /^.{8,}$/
 export const isOnlyText = /^[a-zA-ZÁ-Úá-úüÜñÑ\s]+$/
 
 //Valida una direccion de correo electrónico
-export const isValidEmail = /^(\w-\.)+@(\w-)+(\.\w){1,2}$/
+export const isValidEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
 
 //Valida un código como 1234567-1234 y valida cedula de 7 o 10 numeros ademas de agregar una letra
 export const isValidCode = /(\d{7}-\d{4})|(\d{7,10}[SCOP])/
