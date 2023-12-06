@@ -1,6 +1,7 @@
 import React from 'react'
-import { View, Pressable, Text, StyleSheet} from 'react-native'
+import { Pressable, Text, StyleSheet} from 'react-native'
 import theme from './../theme.js'
+import {allowMultiStyle} from '../functionsFronted.js'
 
 const ButtonText = (
     {
@@ -10,27 +11,27 @@ const ButtonText = (
         onPress
     }
 ) => {
-    const combinedStyles = Array.isArray(containerStyle) ? [style.default, ...containerStyle] :
-        [style.default, containerStyle]
+    
+    const fnContainterStyle = allowMultiStyle(style.default, containerStyle)
+    
+    const fnContentStyle = allowMultiStyle(style.default, contentStyle)
+    
     return (
-    <View>
         <Pressable
-        style={combinedStyles}
+        style={fnContainterStyle}
         onPress={onPress}>
-            <Text style={contentStyle}>{text}</Text>
+            <Text 
+            style={fnContentStyle}>
+                {text}</Text>
         </Pressable>
-    </View>)
+    )
 }
 
 const style = StyleSheet.create({
     default:{
-    borderRadius:20,
+        borderRadius:20,
         backgroundColor:theme.colors.secondary,
-        justifyContent:'center',
-        paddingTop: 8,
-        paddingLeft: 8,
-        paddingRight: 8,
-        paddingBottom: 8
+        justifyContent:'center'
     }
 })
 

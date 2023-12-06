@@ -1,31 +1,61 @@
+/*Aquí se crea la screen Login
+Estructura básica 
+    - Logo
+    - Titulo
+    - Campo de texto para Codigo
+    - Campo de texto para contraseña
+    - Checkbox de recordarme
+    - Boton iniciar sesion
+    - Enlace a screen Register
+    - Enlace a screen ForgotPassword
+    - Información acerca de nosotros
+
+Entrada:
+    navigation: objeto navigation que permite las diferentes navegaciones establecidas
+Salida: Screen
+*/
+//--------------- importacion de frameworks ----------
 import React,{useState} from 'react'
 import {
-    Dimensions,
     StyleSheet, 
     Text, 
     View 
 } from 'react-native'
-import Constants from 'expo-constants'
-/*
 import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp
-} from 'react-native-responsive-screen' */
+} from 'react-native-responsive-screen'
+//--------------- importacion de frameworks fin ----------
+
+//--------------- importacion componentes externos ----------
 import { CheckBox } from '@rneui/themed'
+//--------------- importacion componentes externos fin ----------
+
+//--------------- importacion Componentes ----------
 import Passwordfield from './../components/Passwordfield.jsx'
 import Header from '../components/Header.jsx'
 import Footer from '../components/Footer.jsx'
 import Textfield from '../components/Textfield.jsx'
 import ButtonText from '../components/ButtonText.jsx'
 import Browser from '../components/Browser.jsx'
-import theme from '../theme.js'
-import {verifyPassword, verifyCode, validFieldEmpty} from '../validationValidValues.js'
+//--------------- importacion Componentes ----------
 
-const {height, width} = Dimensions.get('window')
+//--------------- otras importaciones ----------
+import {
+    verifyPassword, 
+    verifyCode, 
+    validFieldEmpty
+} from '../validationValidValues.js'
+import {textfield} from '../styles/textField.js'
+import { footer } from '../styles/footer.js'
+import { button } from '../styles/button.js'
+import theme from '../theme.js'
+//--------------- otras importaciones ----------
 
 const COLOR_SECONDARY = theme.colors.secondary
 
 const Login = ({navigation}) => {
+// Información de prueba utilizada por el recordar me de la screen
     const userTrial  = {
         name:'Diego',
         lastname:'Cardenas',
@@ -37,45 +67,17 @@ const Login = ({navigation}) => {
     const [user, setUser] = useState('')
     const [password, setPassword] = useState('')
     const [rememberMe, setRememberMe] = useState(false)
+    //----------------------------  Hooks fin ----------------------------
 
-    // useEffect(() => {
-    //     handlerLoadCredentialsStoraged();
-    // },[])
-    
-    //----------------------------  End hooks ----------------------------
-    //---------------------------- Handlers ------------------------------
-    // const handlerRememberMe = () => {
-    //     setRememberMe(!rememberMe)
-    // }
-    // const handlerLoadCredentialsStoraged = async () => {
-    //     try {
-    //         const credentials = await AsyncStorage.getItem('credentials')
-    //         if (credentials){
-    //             const {userName, password} = JSON.parse(credentials)
-    //             setUser(userName)
-    //             setPassword(password)
-    //             setRememberMe(true)
-    //         } 
-    //     } catch (error) {
-    //         console.error(error)
-    //     }
-    // }
+    /*dataTrial Creada para manejar los datos de prueba
+    Entradas:
+        code: el código preestablecido para que el usuario inicie sesion
+        password: la clave correspondiente al usuario
+    Salida: Modificación del estado rememberMe
+    */
+    const WP_LOGO_LOGIN = 40
 
-    // const saveCredentials = async () => {
-    //     try {            
-    //         if (rememberMe){
-    //             const credentials = JSON.stringify({userName,password})
-    //             await AsyncStorage.setItem('credentials', credentials)
-    //             await Keychain.setGenericPassword(userName, password)
-    //         }else{
-    //             return
-    //         }
-    //     } catch (error) {
-    //         console.error(error)
-    //     }
-    // }
-    //---------------------------- End handlers ------------------------------
-    const dataTrial = function (){
+    const dataTrial = function (code, password){
         setRememberMe((prevRememberMe) => {
             const newRememberMe = !prevRememberMe;
             setUser(newRememberMe ? userTrial.code : '');
@@ -84,34 +86,45 @@ const Login = ({navigation}) => {
         });
     }
 
+    //Manejador que controla la validación de valores válidos
     const handlerLogin = () => {
         if( verifyPassword(password, setPassword) &&
-            validFieldEmpty(password, user)){
-                navigation.navigate('Home')
+            verifyCode(user, setUser) &&
+            validFieldEmpty(password, user) )
+        {
+            navigation.navigate('Home')
         }
     }
+
     return (
         <View style={style.container}>
             <View style={style.header}>
                 <Header 
                 screen='login' 
-                logoWitdh={240*1.4} 
-                logoHeight={200*1.4}/>
+                logoWitdh={wp(WP_LOGO_LOGIN)} 
+                logoHeight={hp(WP_LOGO_LOGIN*1.2)}/>
             </View>
 
             <View style={style.content}>
-
-                <Text style={style.title}>Sistema de asignación y {'\n'}búsqueda de aulas</Text>
+                <View style={style.title}>
+                    <Text>Sistema de asignación y {'\n'}búsqueda de aulas</Text>
+                </View>
                 
                 <Textfield 
                 placeholder='Código'
                 value={user}
-                ></Textfield>
+                onChangeText={(text) => setUser(text)}
+                containerStyle={textfield.style}
+                contentStyle={textfield.content}/>
                 
                 <Passwordfield 
                 placeholder='Contraseña'
                 value={password}
-                initSecure/>
+                onChangeText={ (text) => setPassword(text) }
+                initSecure
+                containerStyle={textfield.style}
+                contentStyle={textfield.content}
+                />
                 
                 <CheckBox 
                 title="Recordarme" 
@@ -119,30 +132,36 @@ const Login = ({navigation}) => {
                 checkedColor={COLOR_SECONDARY}
                 center 
                 containerStyle={style.checkBox}
-                onPress={ dataTrial }/>
+                onPress={ () => dataTrial(user, password)} />
                 
                 <ButtonText
                 text='Iniciar sesion'
-                containerStyle={style.button}
-                contentStyle={[style.textButton, style.textCenter]}
+                containerStyle={button.style}
+                contentStyle={[button.text, style.textCenter]}
                 onPress={ handlerLogin }
                 />
-
-                <Text style={[style.textCenter, style.freeText]}
-                >¿No tienes una cuenta?  
+                
                 <Browser 
+                text='¿No tienes una cuenta? registrate'
                 destiny='interscreens'
                 navigation={navigation}
                 navigate='Register'
-                contentStyle={[style.freeText, style.center]}> registrate </Browser></Text>
+                contentStyle={[style.textCenter, style.freeText]}/>
                 
-                <Text 
-                style={[style.textRed,style.textCenter]}>¿Olvidaste tu contraseña?</Text>
+                <Browser
+                text='¿Olvidaste tu contraseña?'
+                destiny='interscreens'
+                navigation={navigation}
+                navigate='ForgotPassword'
+                contentStyle={[style.textRed,style.textCenter]}
+                />
+
             </View>
             
             <View style={style.footer}>
                 <Footer 
-                noPqrs/>
+                noPqrs
+                containerStyle={[style.footer, footer.style]}/>
             </View>
         </View>
     )
@@ -153,54 +172,46 @@ const style = StyleSheet.create({
         justifyContent:'space-between',
         backgroundColor:theme.colors.primary,
         position: 'relative',
-        height:height,
-        width: width,
+        height:hp(100),
+        width: wp(100),
     },
     header:{
-        flex:3,
-        marginTop: Constants.statusBarHeight + 10,
-        alignItems: 'center'
+        flex:4        
     },
     content:{
-        flex:5
+        flex:5,
+        paddingBottom: hp(12)
     },
     footer:{
-        flex:2,
-        position:'absolute',
-        bottom:0,
-        left:-10,
-        right:0
+        flex:1
     },
     title:{
-        fontSize: 14,
+        fontSize: hp(1.7),
         textAlign: 'center',
-        marginTop: 20,
-        marginLeft: 30,
-        marginRight: 30
+        marginTop: hp(9),
+        marginLeft: 'auto',
+        marginRight: 'auto'
     },
     textRed:{
         color:theme.colors.secondary
     },
     checkBox:{
-        backgroundColor:theme.colors.primary,
+        backgroundColor: theme.colors.primary,
         color: theme.colors.secondary,
         marginLeft:'auto',
-        marginRight:'auto'
-    },
-    button:{
-        marginLeft: 'auto',
-        marginRight: 'auto'
-    },
-    textButton:{
-        color:theme.colors.primary,
-        fontWeight: theme.fontWeight.bold
+        marginRight:'auto',
+        marginTop: hp(-1.5),
+        paddingTop: hp(0),
+        paddingBottom: hp(0),
+        paddingLeft: wp(2),
+        paddingRight: wp(2)
     },
     textCenter:{
         textAlign:'center'
     },
     freeText:{
-        marginTop: 25,
-        marginBottom: 15
+        marginTop: hp(1),
+        marginBottom: hp(1)
     }
 })
 

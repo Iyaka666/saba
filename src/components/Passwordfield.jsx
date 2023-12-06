@@ -1,14 +1,21 @@
 import React, { useState } from 'react'
 import {View, TextInput, Pressable, StyleSheet} from 'react-native'
+import {
+    widthPercentageToDP as wp,
+    heightPercentageToDP as hp
+} from 'react-native-responsive-screen'
 import {Entypo} from '@expo/vector-icons'
 import theme from '../theme.js'
+import { allowMultiStyle } from '../functionsFronted.js'
 
 const Passwordfield = (
     {
         initSecure,
-        handlerChangeText,
+        onChangeText,
         value,
-        placeholder
+        placeholder,
+        containerStyle,
+        contentStyle
     }
 ) => {
     //----------------------------- Hooks -----------------------------
@@ -20,16 +27,17 @@ const Passwordfield = (
         setEyeIcon(secure ? 'eye':'eye-with-line')
     }
     
+    const fnContainerStyle = allowMultiStyle(style.container, containerStyle)
+    const fnContentStyle = allowMultiStyle(style.textInput, contentStyle)
     return (
-    <View style={style.container}>
+    <View style={fnContainerStyle}>
         <TextInput
-        handlerChangeText={handlerChangeText}
+        onChangeText={onChangeText}
         secureTextEntry={secure}
         placeholder={placeholder}
         placeholderTextColor="#555555"
         value={value}
-        style={style.textInput}>
-        </TextInput>
+        style={fnContentStyle}/>
         <Pressable        
         onPress={handlerEye}
         style={style.eye}>
@@ -50,25 +58,18 @@ const style = StyleSheet.create({
     },
     textInput:{
         flex:1,
-        marginTop:20,
-        marginLeft:theme.margins.fieldsL,
-        marginRight:theme.margins.fieldsR,
-        paddingLeft:theme.paddings.fields,
-        paddingRight:theme.paddings.fields,
-        paddingTop:theme.paddings.fieldsVertical,
-        paddingBottom:theme.paddings.fieldsVertical,
         fontSize:theme.fontSizes.body,
         color:theme.colors.textPrimary,
         borderColor:theme.colors.secondary,
         borderWidth: 1,
         borderRadius: 8,
-        fontWeight:theme.fontWeight.thin,
+        fontWeight: theme.fontWeight.thin,
         position:'relative'
     },
     eye:{
         position:'absolute',
-        top:25,
-        left:308,
+        top:hp(1.5),
+        left:wp(50),
         zIndex:5
     }
 })

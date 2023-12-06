@@ -1,26 +1,31 @@
 import React from 'react'
-import { View, Text, Linking, Pressable } from 'react-native'
+import { Text, Linking, Pressable } from 'react-native'
+import { allowMultiStyle } from '../functionsFronted.js'
 
 const Browser = (
     {
         destiny,
         link = undefined, 
         text,
-        containerStyle = undefined, 
-        contentStyle = undefined,
+        containerStyle = null, 
+        contentStyle = null,
         navigate = undefined,
         navigation
     }
     ) => { 
-        return(<View style={containerStyle}>
-            <Pressable onPress={() => {
+
+        const fnContainerStyle = allowMultiStyle(containerStyle)
+        const fnContentStyle = allowMultiStyle(contentStyle)
+
+        return(
+        <Pressable
+            style={fnContainerStyle} 
+            onPress={() => {
                 if(destiny === 'internet') Linking.openURL(link)
                 if(destiny === 'interscreens') navigation.navigate(navigate)
-                throw new Error('No se ha ingresado ningún destino') 
             }}>
-                <Text style={contentStyle}>{text}</Text>
-            </Pressable>
-        </View>
+                <Text style={fnContentStyle}>{text}</Text>
+        </Pressable>
         )
 }
 
