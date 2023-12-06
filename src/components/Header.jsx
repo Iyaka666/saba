@@ -40,6 +40,7 @@ import { Dialog, Divider } from '@rneui/themed'
 //--------------- otras importaciones ----------
 import Logo from './../../assets/svgLogo.svg'
 import theme from '../theme.js'
+import dialog from '../styles/dialog.js'
 
 const Header = ({
     screen,
@@ -65,14 +66,15 @@ const Header = ({
 
     if(screen === 'logout'){
         return  (
-        <View style={style.container}>
+            <Pressable style={style.container}
+            onPress={() => navigation.navigate('Login')}>
             <Logo 
             width={wp(20)} 
             height={hp(10)}/>
             <View style={style.textContainer}>
                     <Text style={style.text}>SABA</Text>
             </View>
-        </View>
+            </Pressable>
     )}
     
     if(screen === 'logedIn'){
@@ -92,6 +94,7 @@ const Header = ({
             <Dialog
                 isVisible={visibleDialog}
                 onBackdropPress={toggleDialog}
+                overlayStyle={[dialog.container, dialog.content]}
             >
                 <Ionicons name="person-circle" size={50*4} color='red' />
                 <Text>{nameUser}</Text>

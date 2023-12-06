@@ -55,18 +55,19 @@ const style = StyleSheet.create({
     container:{
         flexDirection:'row',
         alignItems:'center',
+        position:'relative'
     },
     textInput:{
-        flex:1,
+        flex: 3,
         fontSize:theme.fontSizes.body,
         color:theme.colors.textPrimary,
         borderColor:theme.colors.secondary,
         borderWidth: 1,
         borderRadius: 8,
         fontWeight: theme.fontWeight.thin,
-        position:'relative'
     },
     eye:{
+        flex: 1,
         position:'absolute',
         top:hp(1.5),
         left:wp(50),

@@ -28,8 +28,7 @@ const TextField = (
         inputMode={inputMode}
         keyboardType={keyboardType}
         value={value}
-        onChangeText={onChangeText}
-        ></TextInput>
+        onChangeText={onChangeText}/>
     </View>
     )
 }

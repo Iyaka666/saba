@@ -10,7 +10,8 @@ const Browser = (
         containerStyle = null, 
         contentStyle = null,
         navigate = undefined,
-        navigation
+        navigation,
+        sendVariables = null,
     }
     ) => { 
 
@@ -22,7 +23,9 @@ const Browser = (
             style={fnContainerStyle} 
             onPress={() => {
                 if(destiny === 'internet') Linking.openURL(link)
-                if(destiny === 'interscreens') navigation.navigate(navigate)
+                if(destiny === 'interscreens') {
+                    navigation.navigate(navigate, sendVariables)
+                }
             }}>
                 <Text style={fnContentStyle}>{text}</Text>
         </Pressable>
