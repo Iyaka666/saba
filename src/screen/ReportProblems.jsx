@@ -1,14 +1,17 @@
-import React from 'react'
-import { View, Text, Pressable, StyleSheet, Dimensions } from 'react-native'
+import React, { useState } from 'react'
+import { View, Text, TextInput, Pressable, StyleSheet, Dimensions } from 'react-native'
 import constants from 'expo-constants'
 import Header from '../components/HeaderWithUser.jsx'
 import Footer from '../components/Footer.jsx'
 import theme from '../theme.js'
+import TextField from '../components/Textfield.jsx'
 
 const { height, width } = Dimensions.get('window')
 
 const ReportProblems = () => {
     //----------------------------  Hooks ----------------------------
+    const [AreaText, SetAreaText] = useState('')
+    const [SalonText, SetSalonText] = useState(0)
     //----------------------------  End hooks ------------------------
 
 
@@ -20,16 +23,25 @@ const ReportProblems = () => {
 
             <View style={style.content}>
                 <Text>Notificar Problemas En El Salón</Text>
-                <View >
-                    <Text>Salón</Text>
-                    <Textfield
-                        placeholder='Salon'
-                    ></Textfield>
+                <View style={{ flex: 2, justifyContent: 'center', alignItems: 'flex-start', width: '100%' }}>
+                    <Text style={style.inputTitle}>Salón:</Text>
+                    <TextField
+                        placeholder='Salón'
+                        value={SalonText}
+                    />
                 </View>
-                <View>
-
+                <View style={style.areaContainer}>
+                    <TextInput
+                        style={style.textArea}
+                        value={AreaText}
+                        multiline={true}/>
                 </View>
-                <Pressable style={style.button}></Pressable>
+                <View style={{ flex: 2, justifyContent: 'center', alignItems: 'center' }}>
+                    <Pressable
+                        style={style.button}>
+                        <Text style={[style.textButton, style.textCenter]}>Enviar</Text>
+                    </Pressable>
+                </View>
             </View>
 
             <View>
@@ -55,23 +67,31 @@ const style = StyleSheet.create({
     content: {
         flex: 7,
         alignItems: 'center',
-        justifyContent: 'space-evenly'
+        justifyContent: 'space-evenly',
     },
-    imageContainer: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: theme.colors.primary,
-        width: 225,
+    textArea: {
+        flex: 1,
+        marginLeft: theme.margins.fieldsL,
+        marginRight: theme.margins.fieldsR,
+        backgroundColor: 'white',
+        borderColor: 'red',
+        borderWidth: 1,
         borderRadius: 20,
-        overflow: 'hidden'
+        padding: 10,
     },
-    textRed: {
-        color: theme.colors.secondary
+    areaContainer: {
+        flex: 6,
+        width: '100%',
+    },
+    inputTitle: {
+        marginLeft: theme.margins.fieldsL,
+        marginRight: theme.margins.fieldsR,
     },
     button: {
         borderRadius: 20,
         backgroundColor: theme.colors.secondary,
         justifyContent: 'center',
+        alignContent: 'center',
         paddingTop: 8,
         paddingLeft: 8,
         paddingRight: 8,

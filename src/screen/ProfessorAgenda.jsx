@@ -9,41 +9,46 @@ import theme from '../theme.js'
 
 const { height, width } = Dimensions.get('window')
 
-const DocentAgenda = () => {
+const ProfessorAgenda = ({navigation}) => {
 
     const [selectedDay, setSelectedDay] = useState('');
-    const [renderedEventIds, setRenderedEventIds] = useState(new Set());
 
     const scheduleSystemRoom = "Solicitar sala\nde sistemas"
     const cancelClass = "Cancelar\nclase"
     const reportProblems = "Notificar\nproblemas"
 
     const items = {
-        '2023-11-28': [{ id: 1, name: 'Reunión de trabajo' }, { id: 2, name: 'Cita médica' }],
-        '2023-11-29': [{ id: 3, name: 'Comida con amigos' }, { id: 4, name: 'Entrenamiento' }],
-        '2023-12-01': [{ id: 5, name: 'Prueba' }, { id: 6, name: 'Otro' }],
-        '2023-12-04': [{ id: 7, name: 'Prueba' }, { id: 8, name: 'Otro' }],
+        '2023-11-28': [{ id: 1, inicio: '08:00:00', fin: '10:00:00', name: 'Ecología', salon: '301' },
+        { id: 2, inicio: '14:00:00', fin: '18:00:00', name: 'Microbiología', salon: '209' }],
+
+        '2023-11-29': [{ id: 3, inicio: '09:00:00', fin: '11:00:00', name: 'Bioinformática', salon: '108' },
+        { id: 4, inicio: '15:00:00', fin: '18:30:00', name: 'Metodologías de autoformación', salon: '120' }],
+
+        '2023-12-01': [{ id: 5, inicio: '08:00:00', fin: '10:00:00', name: 'Microbiología', salon: '212' },
+        { id: 6, inicio: '13:00:00', fin: '16:00:00', name: 'Ecología', salon: '314' }],
+
+        '2023-12-05': [{ id: 7, inicio: '08:00:00', fin: '10:00:00', name: 'Ecología', salon: '301' },
+        { id: 8, inicio: '14:00:00', fin: '18:00:00', name: 'Microbiología', salon: '209' }],
     };
 
-    const renderItem = () => {
-        const eventsForSelectedDay = items[selectedDay] || [];
+
+    const renderItem = (item) => {
         return (
-            <View style={style.ItemsContainer}>
-                {eventsForSelectedDay.map((event) => {
-                    if (!renderedEventIds.has(event.id)) {
-                        setRenderedEventIds((prevIds) => new Set(prevIds).add(event.id));
-                        return (
-                            <View key={event.id} style={style.eventItem}>
-                                <Text>{event.name}</Text>
-                            </View>
-                        );
-                    }
-                    return null;
-                })}
+            <View key={item.id} style={style.ItemsContainer}>
+                <Text>{item.name}</Text>
             </View>
         );
     };
 
+    const renderDay = (day, item) => {
+        return (
+            <View style={{ width: 70, marginTop: 4, marginBottom: 4, justifyContent: 'center', alignItems: 'center' }}>
+                <Text>{item.inicio}</Text>
+                <Text style={{ marginTop: -8, marginBottom: -8 }}>-</Text>
+                <Text>{item.fin}</Text>
+            </View>
+        );
+    }
     const renderEmptyData = () => {
         return (
             <View>
@@ -53,7 +58,6 @@ const DocentAgenda = () => {
     };
 
     const onDayPress = (day) => {
-        setSelectedDay([])
         setSelectedDay(day.dateString);
     };
 
@@ -61,6 +65,16 @@ const DocentAgenda = () => {
         const today = new Date().toISOString().split('T')[0];
         setSelectedDay(today);
     }, []);
+
+    const handlerSchedule = () => {
+                navigation.navigate('ScheduleSystemRoom')
+    }
+    const handlerCancel = () => {
+                navigation.navigate('CancelClass')
+    }
+    const handlerReport = () => {
+                navigation.navigate('ReportProblems')
+    }
 
     return (
         <View style={style.container}>
@@ -71,8 +85,11 @@ const DocentAgenda = () => {
             <View style={style.content}>
                 <View style={style.agendaContainer}>
                     <Agenda
+                        key={selectedDay}
                         items={items}
+                        selected={selectedDay}
                         renderItem={renderItem}
+                        renderDay={renderDay}
                         onDayPress={onDayPress}
                         renderEmptyData={renderEmptyData}
                         showOnlySelectedDayItems={true}
@@ -81,19 +98,22 @@ const DocentAgenda = () => {
                 </View>
                 <View style={style.ButtonsContainer}>
                     <ButtonText
+                        containerStyle={style.button}
+                        contentStyle={[style.textButton, style.textCenter]}
                         text={scheduleSystemRoom}
-                        containerStyle={style.button}
-                        contentStyle={[style.textButton, style.textCenter]}
+                        onPress={handlerSchedule}
                     />
                     <ButtonText
+                        containerStyle={style.button}
+                        contentStyle={[style.textButton, style.textCenter]}
                         text={cancelClass}
-                        containerStyle={style.button}
-                        contentStyle={[style.textButton, style.textCenter]}
+                        onPress={handlerCancel}
                     />
                     <ButtonText
-                        text={reportProblems}
                         containerStyle={style.button}
                         contentStyle={[style.textButton, style.textCenter]}
+                        text={reportProblems}
+                        onPress={handlerReport}
                     />
                 </View>
             </View>
@@ -146,7 +166,12 @@ const style = StyleSheet.create({
     },
     ItemsContainer: {
         flex: 1,
+        marginTop: 4,
+        marginBottom: 4,
+        paddingLeft: 8,
         borderRadius: 20,
+        borderWidth: 1,
+        borderColor: 'red',
         justifyContent: 'center',
         backgroundColor: theme.colors.primary,
         overflow: 'hidden'
@@ -168,4 +193,4 @@ const style = StyleSheet.create({
     }
 })
 
-export default DocentAgenda
+export default ProfessorAgenda

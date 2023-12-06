@@ -18,6 +18,26 @@ const Home = () => {
     const ImageOpcion2 = Mapa;
     const TextOpcion1 = 'Horario';
     const TextOpcion2 = 'Mapa';
+    /*
+    if (rol == professor) {
+        const ImageOpcion1 = Salon;
+        const ImageOpcion2 = Mapa;
+        const TextOpcion1 = 'Horario';
+        const TextOpcion2 = 'Mapa';
+    }
+    if (rol == Student) {
+        const ImageOpcion1 = Salon;
+        const ImageOpcion2 = Mapa;
+        const TextOpcion1 = 'Horario';
+        const TextOpcion2 = 'Mapa';
+    }
+    if (rol == Staf) {
+        const ImageOpcion1 = Salon;
+        const ImageOpcion2 = Mapa;
+        const TextOpcion1 = 'Horario';
+        const TextOpcion2 = 'Mapa';
+    }*/
+
 
     return (
         <View style={style.container}>

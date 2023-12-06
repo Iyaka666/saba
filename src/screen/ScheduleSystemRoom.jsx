@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { View, Text, TextInput, Pressable, StyleSheet, Dimensions } from 'react-native'
 import constants from 'expo-constants'
 import Header from '../components/HeaderWithUser.jsx'
@@ -9,8 +9,9 @@ const { height, width } = Dimensions.get('window')
 
 const ScheduleSystemRoom = () => {
     //----------------------------  Hooks ----------------------------
+    const [isVisible, setIsVisible] = useState(false);
     //----------------------------  End hooks ------------------------
-    const fixedText = "Este es un texto fijo \n con saltos de línea \n que se muestra en el área de texto.";
+    const fixedText = "Este es un texto fijo\ncon saltos de línea\nque se muestra en el área de texto.";
 
 
     return (
@@ -21,25 +22,33 @@ const ScheduleSystemRoom = () => {
 
             <View style={style.content}>
                 <Text>Solisitar Sala de Sistemas</Text>
-                <View style={{ flexDirection: 'row' }}>
-                    <View>
-                        <Text>Mes</Text>
+                <View style={{ flex: 1, width: '100%' }}>
+                    <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+                        <View style={style.inputTitle}>
+                            <Text>Mes</Text>
+                        </View>
+                        <View style={style.inputTitle}>
+                            <Text>Día</Text>
+                        </View>
                     </View>
-                    <View>
-                        <Text>Día</Text>
+                    <View style={{ flex: 1, justifyContent: 'center' }}>
+                        <Text style={style.inputTitle}>Horario</Text>
+                    </View>
+                    <View style={{ flex: 2 }}>
+                        {isVisible && (
+                            <TextInput
+                                style={style.textArea}
+                                editable={false}
+                                multiline={true}>
+                                <Text style={{ color: 'black' }}>{fixedText}</Text>
+                            </TextInput>)}
+                    </View>
+                    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                        <Pressable style={style.button}>
+                            <Text style={[style.textButton, style.textCenter]}>Enviar</Text>
+                        </Pressable>
                     </View>
                 </View>
-                <View>
-                    <Text>Horario</Text>
-                </View>
-                <View>
-                    <TextInput
-                        style={styles.textArea}
-                        value={fixedText}
-                        editable={false}
-                        multiline={true} />
-                </View>
-                <Pressable style={style.button}></Pressable>
             </View>
 
             <View>
@@ -67,14 +76,6 @@ const style = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-evenly'
     },
-    imageContainer: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: theme.colors.primary,
-        width: 225,
-        borderRadius: 20,
-        overflow: 'hidden'
-    },
     textRed: {
         color: theme.colors.secondary
     },
@@ -89,11 +90,18 @@ const style = StyleSheet.create({
         width: 100
     },
     textArea: {
-      borderColor: 'gray',
-      borderWidth: 1,
-      padding: 10,
-      width: '100%',
-      minHeight: 100,
+        flex: 1,
+        marginLeft: theme.margins.fieldsL,
+        marginRight: theme.margins.fieldsR,
+        backgroundColor: 'white',
+        borderColor: 'red',
+        borderWidth: 1,
+        borderRadius: 20,
+        padding: 10,
+    },
+    inputTitle: {
+        marginLeft: theme.margins.fieldsL,
+        marginRight: theme.margins.fieldsR,
     },
     textButton: {
         color: theme.colors.primary,
