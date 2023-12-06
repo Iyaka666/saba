@@ -1,6 +1,5 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { View, Text, StyleSheet} from 'react-native'
-import Constants from 'expo-constants'
 import {
     heightPercentageToDP as hp,
     widthPercentageToDP as wp
@@ -10,13 +9,32 @@ import ButtonText from './../components/ButtonText.jsx'
 import Browser from '../components/Browser.jsx'
 import Header from '../components/Header.jsx'
 import Footer from '../components/Footer.jsx'
+import DialogMessage from '../components/DialogMessage.jsx'
 import { textfield } from '../styles/textField.js'
 import { button } from '../styles/button.js'
 import { footer } from '../styles/footer.js'
-
+import { verifyEmail } from '../validationValidValues.js'
+import dialog from '../styles/dialog.js'
 const ForgotPassword = ({navigation}) => {
-    return(
-        <View style={style.container}>
+    
+    const [email, setEmail] = useState('')
+    const [visible, setVisible] = useState(false)
+    const [title, setTitle] = useState('')
+    const [message, setMessage] = useState('')
+
+    const handlerSend = () => {
+        const info = verifyEmail(email, setEmail)
+        if(info.validation) { 
+            navigation.navigate('Verification',{email})
+        } else{
+            setVisible(true)
+            setTitle(info.title)
+            setMessage(info.message)
+        } 
+        } 
+        
+        return(
+            <View style={style.container}>
             <View style={style.header}>
             <Header
             screen='logout'
@@ -27,26 +45,35 @@ const ForgotPassword = ({navigation}) => {
             <View>
                 <Text style={style.text}>Ingresa tu dirección de correo electrónico</Text>
             </View>
-            <TextField
-            placeholder='example@gmail.com'
-            containerStyle={[textfield.style, style.elements]}
-            contentStyle={textfield.content}
-            />
-            <Browser
-            text='Volver a inicio de sesión'
-            destiny='interscreens'
-            navigation={navigation}
-            navigate='Login'
-            contentStyle={style.text}
-            />
-            <ButtonText
-            text='Enviar'
-            containerStyle={[button.style, style.elements]}
-            contentStyle={button.text}
-            onPress={() => navigation.navigate('Verification')}
-            />
+                <TextField
+                value={email}
+                placeholder='user@example.com'
+                containerStyle={[textfield.style, style.elements]}
+                contentStyle={textfield.content}
+                keyboardType='email-address'
+                onChangeText={text => setEmail(text)}
+                />
+                <Browser
+                text='Volver a inicio de sesión'
+                destiny='interscreens'
+                navigation={navigation}
+                navigate='Login'
+                contentStyle={style.text}
+                />
+                <ButtonText
+                text='Enviar'
+                containerStyle={[button.style, style.elements]}
+                contentStyle={button.text}
+                onPress={handlerSend}
+                />
         </View>
-
+        <DialogMessage
+        title={title}
+        message={message}
+        isVisible={visible}
+        overlayStyle={[dialog.content, dialog.container]}
+        onBackdropPress={setVisible}
+        />
         <View style={style.footer}>
             <Footer        
             containerStyle={[style.footer, footer.style]}/>
