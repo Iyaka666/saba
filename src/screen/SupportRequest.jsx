@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { View, Text, StyleSheet, Pressable, ScrollView } from 'react-native'
-import Header from '../components/HeaderWithUser.jsx'
+import Header from '../components/Header.jsx'
 import { Table, Row, Rows } from 'react-native-table-component'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen'
 import Footer from '../components/Footer.jsx'
