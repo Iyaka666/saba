@@ -18,7 +18,11 @@ import { textfield } from '../styles/textField.js'
 const tableDataSample = {
     tableHead: ['Materia', 'Docente', 'Horario', 'Aula'],
     widthArr: [160, 160, 160, 120],
-    tableData: [
+    tableData: [['Ecologia', 'Alan Giraldo Lopez', '10:00-13:00', '301'],
+    ['Microbiologia', 'Neyla Benitez Campo', '8:00-12:00', '309'],
+    ['Bioinformatica', 'Andres Orlando Castillo Giraldo', '8:00-12:00', '215'],
+    ['Metodologias de autoformacion', 'Monica Ortiz Palacion', '18:30-21:30', '302'],
+    ['Introduccion a la investigacion', 'Calos Augusto Osorio Marulanda', '14:00-16:00', '212'],
     ]
 };
 
@@ -30,37 +34,37 @@ const Teacher = ({ navigation }) => {
     //------------------Apertura del explorador de archivos-------------------------//
     const pickDocument = async () => {
         try {
-          const result = await DocumentPicker.getDocumentAsync({
-            type: 'text/csv',
-          });
-    
-          if (result.type === 'success') {
-            const fileContent = await FileSystem.readAsStringAsync(result.uri);
-            parseCSV(fileContent);
-          }
-        } catch (err) {
-          console.error('Error al seleccionar el archivo', err);
-        }
-      };
-
-      const parseCSV = csvData => {
-        Papa.parse(csvData, {
-          complete: result => {
-            // result.data es un arreglo con los datos del CSV
-            const dataArray = result.data;
-    
-            // Formatear los datos para react-native-table-component
-            const headerData = dataArray[0]; // Suponemos que la primera fila es la cabecera
-            const tableData = dataArray.slice(1); // Resto de filas son datos
-    
-            setTableData({
-              headerData,
-              tableData,
+            const result = await DocumentPicker.getDocumentAsync({
+                type: 'text/csv',
             });
-          },
-          header: true, // Si el CSV tiene encabezados
+
+            if (result.type === 'success') {
+                const fileContent = await FileSystem.readAsStringAsync(result.uri);
+                parseCSV(fileContent);
+            }
+        } catch (err) {
+            console.error('Error al seleccionar el archivo', err);
+        }
+    };
+
+    const parseCSV = csvData => {
+        Papa.parse(csvData, {
+            complete: result => {
+                // result.data es un arreglo con los datos del CSV
+                const dataArray = result.data;
+
+                // Formatear los datos para react-native-table-component
+                const headerData = dataArray[0]; // Suponemos que la primera fila es la cabecera
+                const tableData = dataArray.slice(1); // Resto de filas son datos
+
+                setTableData({
+                    headerData,
+                    tableData,
+                });
+            },
+            header: true, // Si el CSV tiene encabezados
         });
-      };
+    };
 
 
     //------------Vueltas necesarias para la busqueda de asignatura-----------------------//
@@ -112,34 +116,34 @@ const Teacher = ({ navigation }) => {
                     onChangeText={handleSearch}
                 />
                 <View style={styles.containerTable}>
-                    {tableDataSample.tableData.length > 0 &&(
-                    <ScrollView horizontal={true}>
-                        <View>
-                            <Table borderStyle={{ borderWidth: 1, borderColor: 'gray', borderRadius: 10 }}>
-                                <Row
-                                    data={data.tableHead}
-                                    widthArr={data.widthArr}
-                                    style={styles.head}
-                                    textStyle={styles.headText}
-                                />
-                                {/* <Rows data={tableDataSample.tableData} textStyle={styles.text} widthArr={data.widthArr}/> */}
-                            </Table>
-                            <ScrollView>
+                    {tableDataSample.tableData.length > 0 && (
+                        <ScrollView horizontal={true}>
+                            <View>
                                 <Table borderStyle={{ borderWidth: 1, borderColor: 'gray', borderRadius: 10 }}>
-                                
-                                    {data.tableData.map((rowData, index) => (
-                                        <Row
-                                            key={index}
-                                            data={rowData}
-                                            widthArr={data.widthArr}
-                                            style={styles.rowSection}
-                                            textStyle={styles.text}
-                                        />
-                                    ))}
+                                    <Row
+                                        data={data.tableHead}
+                                        widthArr={data.widthArr}
+                                        style={styles.head}
+                                        textStyle={styles.headText}
+                                    />
+                                    {/* <Rows data={tableDataSample.tableData} textStyle={styles.text} widthArr={data.widthArr}/> */}
                                 </Table>
-                            </ScrollView>
-                        </View>
-                    </ScrollView>
+                                <ScrollView>
+                                    <Table borderStyle={{ borderWidth: 1, borderColor: 'gray', borderRadius: 10 }}>
+
+                                        {data.tableData.map((rowData, index) => (
+                                            <Row
+                                                key={index}
+                                                data={rowData}
+                                                widthArr={data.widthArr}
+                                                style={styles.rowSection}
+                                                textStyle={styles.text}
+                                            />
+                                        ))}
+                                    </Table>
+                                </ScrollView>
+                            </View>
+                        </ScrollView>
                     )}
                 </View>
 
@@ -175,8 +179,8 @@ const styles = StyleSheet.create({
     head: {
         height: 44,
         backgroundColor: '#E40613',
-        borderTopLeftRadius:20,
-        borderTopRightRadius:20,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
     },
     headText: {
         fontSize: 20,
