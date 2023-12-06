@@ -7,7 +7,7 @@ import SupportClassrooms from './src/screen/SupportClassrooms.jsx';
 
 export default function App() {
   //return <MainStack/>
-  return <Teacher/>
-  //return <SupporRequest/>
+ // return <Teacher/>
+  return <SupporRequest/>
   //return<SupportClassrooms/>
 }
