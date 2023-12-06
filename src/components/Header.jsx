@@ -79,7 +79,7 @@ const Header = ({
     
     if(screen === 'logedIn'){
         return  (
-        <View style={[style.container, style.bar]}>
+        <View style={[style.containerLogedIn]}>
             <Pressable            
             onPress={() => navigation.navigate('Home')}
             >
@@ -119,6 +119,11 @@ const style = StyleSheet.create({
         flexDirection: 'row',
         marginTop: Constants.statusBarHeight + hp(5),
         justifyContent: 'center',
+    },
+    containerLogedIn:{
+        flexDirection: 'row',
+        alignItems:'center',
+        justifyContent: 'space-between',
     },
     text:{
         fontSize: hp(4),
