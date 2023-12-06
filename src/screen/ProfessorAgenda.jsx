@@ -3,13 +3,14 @@ import { View, Text, StyleSheet, Dimensions } from 'react-native'
 import constants from 'expo-constants'
 import { Agenda } from 'react-native-calendars';
 import ButtonText from '../components/ButtonText.jsx'
-import Header from '../components/HeaderWithUser.jsx'
+import Header from '../components/Header.jsx'
 import Footer from '../components/Footer.jsx'
+import { footer } from '../styles/footer.js'
 import theme from '../theme.js'
 
 const { height, width } = Dimensions.get('window')
 
-const ProfessorAgenda = ({navigation}) => {
+const ProfessorAgenda = ({ navigation }) => {
 
     const [selectedDay, setSelectedDay] = useState('');
 
@@ -36,6 +37,7 @@ const ProfessorAgenda = ({navigation}) => {
         return (
             <View key={item.id} style={style.ItemsContainer}>
                 <Text>{item.name}</Text>
+                <Text>Salon: {item.salon}</Text>
             </View>
         );
     };
@@ -67,19 +69,23 @@ const ProfessorAgenda = ({navigation}) => {
     }, []);
 
     const handlerSchedule = () => {
-                navigation.navigate('ScheduleSystemRoom')
+        navigation.navigate('ScheduleSystemRoom')
     }
     const handlerCancel = () => {
-                navigation.navigate('CancelClass')
+        navigation.navigate('CancelClass')
     }
     const handlerReport = () => {
-                navigation.navigate('ReportProblems')
+        {console.log(navigation)}
+        navigation.navigate('ReportProblems')
     }
 
     return (
         <View style={style.container}>
             <View style={style.header}>
-                <Header></Header>
+                <Header
+                    screen={'logedIn'}
+                    navigation={navigation}
+                />
             </View>
 
             <View style={style.content}>
@@ -118,8 +124,10 @@ const ProfessorAgenda = ({navigation}) => {
                 </View>
             </View>
 
-            <View>
-                <Footer noPqrs></Footer>
+            <View style={style.footer}>
+                <Footer
+                    noPqrs
+                    containerStyle={[style.footer, footer.style]} />
             </View>
         </View>
     )
@@ -128,7 +136,6 @@ const ProfessorAgenda = ({navigation}) => {
 const style = StyleSheet.create({
     container: {
         backgroundColor: theme.colors.primary,
-        flex: 1,
         height: height,
         width: width,
     },
@@ -139,7 +146,7 @@ const style = StyleSheet.create({
         marginRight: 20
     },
     content: {
-        flex: 8,
+        flex: 6,
         alignItems: 'center',
         justifyContent: 'space-evenly',
     },
@@ -190,6 +197,9 @@ const style = StyleSheet.create({
         textSectionTitleDisabledColor: 'rgb(249, 249, 249)',
         selectedDayTextColor: 'rgb(228, 6, 19)',
         selectedDotColor: 'rgb(228, 6, 19)'
+    },
+    footer: {
+        flex: 1
     }
 })
 

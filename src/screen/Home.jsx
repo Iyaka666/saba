@@ -1,8 +1,9 @@
 import React from 'react'
 import { View, Text, Pressable, StyleSheet, Dimensions } from 'react-native'
 import constants from 'expo-constants'
-import Header from './../components/HeaderWithUser.jsx'
+import Header from './../components/Header.jsx'
 import Footer from './../components/Footer.jsx'
+import { footer } from '../styles/footer.js'
 import Mapa from './../../assets/svgMapa.svg'
 import PortaPapeles from './../../assets/svgPortaPapeles.svg'
 import Salon from './../../assets/svgSalon.svg'
@@ -10,28 +11,32 @@ import theme from './../theme.js'
 
 const { height, width } = Dimensions.get('window')
 
-const Home = () => {
+const Home = ({navigation}) => {
     //----------------------------  Hooks ----------------------------
     //----------------------------  End hooks ------------------------
+    const handlerRegreso = () => {
+        navigation.navigate('ProfessorAgenda')
+    }
+
 
     const ImageOpcion1 = Salon;
     const ImageOpcion2 = Mapa;
     const TextOpcion1 = 'Horario';
     const TextOpcion2 = 'Mapa';
     /*
-    if (rol == professor) {
+    if (roll == professor) {
         const ImageOpcion1 = Salon;
         const ImageOpcion2 = Mapa;
         const TextOpcion1 = 'Horario';
         const TextOpcion2 = 'Mapa';
     }
-    if (rol == Student) {
+    if (roll == Student) {
         const ImageOpcion1 = Salon;
         const ImageOpcion2 = Mapa;
         const TextOpcion1 = 'Horario';
         const TextOpcion2 = 'Mapa';
     }
-    if (rol == Staf) {
+    if (roll == Staf) {
         const ImageOpcion1 = Salon;
         const ImageOpcion2 = Mapa;
         const TextOpcion1 = 'Horario';
@@ -42,7 +47,10 @@ const Home = () => {
     return (
         <View style={style.container}>
             <View style={style.header}>
-                <Header></Header>
+                <Header
+                    screen={'logedIn'}
+                    navigation={navigation}
+                />
             </View>
 
             <View style={style.content}>
@@ -58,7 +66,8 @@ const Home = () => {
 
                 <View style={style.imageContainer}>
                     <ImageOpcion2 width={225} height={150} />
-                    <Pressable style={style.button}>
+                    <Pressable style={style.button}
+                    onPress={handlerRegreso}>
                         <Text
                             style={[style.textButton, style.textCenter]}
                         >{TextOpcion2}</Text>
@@ -66,8 +75,10 @@ const Home = () => {
                 </View>
             </View>
 
-            <View>
-                <Footer noPqrs></Footer>
+            <View style={style.footer}>
+                <Footer
+                    noPqrs
+                    containerStyle={[style.footer, footer.style]} />
             </View>
         </View>
     )
@@ -76,7 +87,6 @@ const Home = () => {
 const style = StyleSheet.create({
     container: {
         backgroundColor: theme.colors.primary,
-        flex: 1,
         height: height,
         width: width,
     },
@@ -120,6 +130,9 @@ const style = StyleSheet.create({
     textCenter: {
         textAlign: 'center'
     },
+    footer: {
+        flex: 1
+    }
 })
 
 export default Home

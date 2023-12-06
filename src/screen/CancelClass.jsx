@@ -1,50 +1,73 @@
 import React, { useState } from 'react'
 import { View, Text, TextInput, Pressable, StyleSheet, Dimensions } from 'react-native'
 import constants from 'expo-constants'
-import Header from '../components/HeaderWithUser.jsx'
+import Header from '../components/Header.jsx'
 import Footer from '../components/Footer.jsx'
+import { footer } from '../styles/footer.js'
 import TextField from '../components/Textfield.jsx'
+import { Dialog } from '@rneui/themed'
 import theme from '../theme.js'
 
 const { height, width } = Dimensions.get('window')
 
-const CancelClass = () => {
+const CancelClass = ({ navigation }) => {
     //----------------------------  Hooks ----------------------------
+    const [visibleDialog, setVisibleDialog] = useState(false)
     const [SalonText, SetSalonText] = useState('')
     const [AsignaturaText, SetAsignaturaText] = useState('')
+    const [inicio, setInicio] = useState(new Date())
+    const [fin, setFin] = useState(new Date())
     //----------------------------  End hooks ------------------------
-
+    const toggleDialog = () => setVisibleDialog(!visibleDialog)
+    const handlerRegreso = () => {
+        navigation.navigate('ProfessorAgenda')
+    }
 
     return (
         <View style={style.container}>
             <View style={style.header}>
-                <Header></Header>
+                <Header
+                    screen={'logedIn'}
+                    navigation={navigation}
+                />
             </View>
 
             <View style={style.content}>
-                <Text style={{flex: 1}}>Cancelar Clase</Text>
-                <View style={{ flex: 2, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', width: '100%' }}>
+                <Text style={{ flex: 1 }}>Cancelar Clase</Text>
+                <View style={{ flex: 2, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: "80%" }}>
                     <View>
-                        <Text style={style.inputTitle}>Asignatura</Text>
+                        <Text>Asignatura</Text>
                         <TextField
                             placeholder='Asignatura'
                             value={AsignaturaText}
+                            contentStyle={style.inputWidth}
                         />
                     </View>
                     <View>
-                        <Text style={style.inputTitle}>Salon</Text>
+                        <Text>Salon</Text>
                         <TextField
                             placeholder='Salón'
                             value={SalonText}
+                            contentStyle={style.inputWidth}
                         />
                     </View>
                 </View>
-                <View style={{ flex: 2, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', width: '100%' }}>
+                <View style={{ flex: 2, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '80%' }}>
                     <View>
                         <Text>Hora Inicio</Text>
+                        <TextField
+                            placeholder='Inicio'
+                            value={inicio}
+                            contentStyle={style.inputWidth}
+                        />
                     </View>
                     <View>
                         <Text>Hora Fin</Text>
+                        <TextField
+                            placeholder='Fin'
+                            value={fin}
+                            contentStyle={style.inputWidth}
+                        />
                     </View>
                 </View>
                 <View style={style.areaContainer}>
@@ -52,15 +75,32 @@ const CancelClass = () => {
                         style={style.textArea}
                         multiline={true} />
                 </View>
-                <View style={{ flex: 2, justifyContent: 'center', alignItems: 'center', width: '100%' }}>
-                    <Pressable style={style.button}>
+                <View style={{ flex: 2, alignItems: 'center', justifyContent: 'center' }}>
+                    <Pressable style={style.button}
+                        onPress={toggleDialog}>
                         <Text style={[style.textButton, style.textCenter]}>Enviar</Text>
                     </Pressable>
                 </View>
+
+                <Dialog
+                    onBackdropPress={toggleDialog}
+                    style={style.dialog}
+                >
+                    <View>
+                        <Text style={style.textCenter}>La clase ha sido cancelada{'\n'}satisfactoriamente</Text>
+                    </View>
+                    <Pressable
+                        onPress={handlerRegreso}
+                    >
+                        <Text>Aceptar</Text>
+                    </Pressable>
+                </Dialog>
             </View>
 
-            <View>
-                <Footer noPqrs></Footer>
+            <View style={style.footer}>
+                <Footer
+                    noPqrs
+                    containerStyle={[style.footer, footer.style]} />
             </View>
         </View>
     )
@@ -69,7 +109,6 @@ const CancelClass = () => {
 const style = StyleSheet.create({
     container: {
         backgroundColor: theme.colors.primary,
-        flex: 1,
         height: height,
         width: width,
     },
@@ -86,24 +125,18 @@ const style = StyleSheet.create({
     },
     areaContainer: {
         flex: 8,
-        width: '100%',
+        width: '80%',
     },
     textRed: {
         color: theme.colors.secondary
     },
     textArea: {
         flex: 1,
-        marginLeft: theme.margins.fieldsL,
-        marginRight: theme.margins.fieldsR,
         backgroundColor: 'white',
         borderColor: 'red',
         borderWidth: 1,
         borderRadius: 20,
         padding: 10,
-    },
-    inputTitle: {
-        marginLeft: theme.margins.fieldsL,
-        marginRight: theme.margins.fieldsR,
     },
     button: {
         borderRadius: 20,
@@ -122,6 +155,12 @@ const style = StyleSheet.create({
     textCenter: {
         textAlign: 'center'
     },
+    footer: {
+        flex: 1
+    },
+    inputWidth: {
+        width: 100
+    }
 })
 
 export default CancelClass
